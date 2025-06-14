@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
    */
   while (wb_robot_step(TIME_STEP) != -1) {
     
-    double right_speed = -MAX_SPEED*0.5;
+    double right_speed = MAX_SPEED*0.5;
     double left_speed = MAX_SPEED*0.5;
   
      wb_motor_set_velocity(right_motor, right_speed);

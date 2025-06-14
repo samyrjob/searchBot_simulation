@@ -7,8 +7,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.1718359949227204 0.20936429413646915 0.9626208927660238 1.4120443927580435
-  position 0.1026285038768542 -1.64027419701471 0.6648593169682249
+  orientation -0.2630485791164523 0.5682759977268126 0.7796587942378458 1.0715694292860962
+  position -1.502156367678229 -1.128594267903648 1.149261424183792
 }
 TexturedBackground {
 }
@@ -17,7 +17,7 @@ TexturedBackgroundLight {
 RectangleArena {
 }
 Robot {
-  translation -0.0677991 -0.22866 -3.05311e-15
+  translation -0.12002 0.413316 -3.05311e-15
   children [
     DEF BODY_SHAPE Pose {
       translation 0 0 0.0415
@@ -47,7 +47,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0 0.025
-        rotation 0 1 0 1.57
+        rotation 0 1 -2.3560769783745006e-16 1.5699999999999943
         children [
           DEF wheel Shape {
             appearance PBRAppearance {
@@ -77,7 +77,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0 0.025
-        rotation 0 1 0 1.57
+        rotation -3.1414359711660034e-16 1 -5.497512949540506e-16 1.5699999999999925
         children [
           USE wheel
         ]
@@ -87,7 +87,7 @@ Robot {
       }
     }
     Solid {
-      translation -0.015 0.045 0.068
+      translation -0.015 -0.045 0.068
       children [
         DEF eye Shape {
           appearance PBRAppearance {
@@ -103,7 +103,7 @@ Robot {
       name "solid(2)"
     }
     Solid {
-      translation 0.0015 0.045 0.068
+      translation 0.0015 -0.045 0.068
       children [
         USE eye
       ]
