@@ -3,12 +3,13 @@
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/CorrodedMetal.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.1419411902766369 0.8342962088376266 0.5327312027861846 0.6182638481660344
-  position -2.0784844543059524 -0.4327163133095251 1.0368256638596425
+  orientation 0.14468705627637007 -0.7249804701074275 -0.6734010496790838 5.706925203935171
+  position -0.6086055320976119 0.35464872286399596 0.22851815298790043
 }
 TexturedBackground {
 }
@@ -17,9 +18,26 @@ TexturedBackgroundLight {
 RectangleArena {
 }
 Robot {
-  translation -0.12001970909103955 0.25757289119152865 -0.00020621176297139915
+  translation -0.131935 0.427065 -0.000206212
   rotation -0.9999998353581819 0.0005166127332331788 0.0002497896974206416 0.02918924374266875
   children [
+    VacuumGripper {
+      children [
+        Pose {
+          translation 0 0 0.09
+          children [
+            Shape {
+              appearance CorrodedMetal {
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.03
+              }
+            }
+          ]
+        }
+      ]
+    }
     DEF BODY_SHAPE Pose {
       translation 0 0 0.0415
       rotation 0 0 1 -3.010695613280012
@@ -49,7 +67,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0.045 0 0.025
-        rotation 0.029340249966997377 -0.9991394644437528 0.029316894837703184 4.712324401234279
+        rotation 0.029340249966997394 -0.9991394644437528 0.029316894837703184 4.712324401234279
         children [
           DEF wheel Shape {
             appearance PBRAppearance {
@@ -80,7 +98,7 @@ Robot {
       ]
       endPoint Solid {
         translation -0.045 0 0.025
-        rotation 0.029340255022341506 -0.9991394641470833 0.029316899889023168 4.712324400937356
+        rotation 0.02934025502234152 -0.9991394641470833 0.029316899889023182 4.712324400937356
         children [
           USE wheel
         ]
