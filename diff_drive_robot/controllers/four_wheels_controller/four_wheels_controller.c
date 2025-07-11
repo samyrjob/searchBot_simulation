@@ -17,11 +17,37 @@
  */
 #define TIME_STEP 64
 
+
+ // motor wheels
+static WbDeviceTag wheels[4];
+
 /*
  * This is the main program.
  * The arguments of the main function can be specified by the
  * "controllerArgs" field of the Robot node
  */
+
+
+
+static void wheel_set_speed(WbDeviceTag tag, double speed) {
+    if (speed >= 0.0) {
+        wb_motor_set_position(tag, INFINITY);
+        wb_motor_set_velocity(tag, speed);
+    }
+    else {
+        wb_motor_set_position(tag, -INFINITY);
+        wb_motor_set_velocity(tag, -speed);
+    }
+}
+
+
+static void wheels_set_speed(double speed) {
+    int i;
+    for (i = 0; i < 4; i++)
+        wheel_set_speed(wheels[i], speed);
+}
+
+
 int main(int argc, char **argv) {
   /* necessary to initialize webots stuff */
   wb_robot_init();
@@ -33,15 +59,26 @@ int main(int argc, char **argv) {
    *  WbDeviceTag my_actuator = wb_robot_get_device("my_actuator");
    */
 
+   // all vehicles
+  wheels[0] = wb_robot_get_device("rear_right_wheel");
+  wheels[1] = wb_robot_get_device("rear_left_wheel");
+  wheels[2] = wb_robot_get_device("front_right_wheel");
+  wheels[3] = wb_robot_get_device("front_left_wheel");
+
+
+  // go forward
+  wheels_set_speed(3.0);
+
+
   /* main loop
    * Perform simulation steps of TIME_STEP milliseconds
    * and leave the loop when the simulation is over
    */
   while (wb_robot_step(TIME_STEP) != -1) {
 
+      //wheels_set_speed(2.0);
 
       wb_console_print("message\n");
-      printf("ON SE CALME\n");
       fflush(stdout);
     /*
      * Read the sensors :

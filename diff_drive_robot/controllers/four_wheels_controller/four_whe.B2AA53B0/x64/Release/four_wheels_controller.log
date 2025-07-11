@@ -1,8 +1,10 @@
 ﻿  four_wheels_controller.c
-C:\Users\2427448\SearchBot_Simulation\searchBot_simulation\Robotics\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(43,7): warning C4013: 'wb_console_print' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(34,9): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(35,9): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(81,7): warning C4013: 'wb_console_print' undefined; assuming extern returning int
   Generating code
-  3 of 4 functions (75.0%) were compiled, the rest were copied from previous compilation.
+  1 of 3 functions (33.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  four_wheels_controller.vcxproj -> C:\Users\2427448\SearchBot_Simulation\searchBot_simulation\Robotics\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.exe
+  four_wheels_controller.vcxproj -> C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.exe
