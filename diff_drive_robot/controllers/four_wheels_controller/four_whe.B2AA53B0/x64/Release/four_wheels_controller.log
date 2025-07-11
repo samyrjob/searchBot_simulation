@@ -1,0 +1,8 @@
+﻿  four_wheels_controller.c
+C:\Users\2427448\SearchBot_Simulation\searchBot_simulation\Robotics\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(43,7): warning C4013: 'wb_console_print' undefined; assuming extern returning int
+  Generating code
+  3 of 4 functions (75.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  four_wheels_controller.vcxproj -> C:\Users\2427448\SearchBot_Simulation\searchBot_simulation\Robotics\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.exe

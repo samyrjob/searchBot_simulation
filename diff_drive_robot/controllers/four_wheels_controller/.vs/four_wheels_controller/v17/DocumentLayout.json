@@ -1,0 +1,40 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "\\\\vwchredir01\\Share\\2427448\\Documents\\Robotics\\diff_drive_robot\\controllers\\four_wheels_controller\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B2AA53B0-6416-4406-8FF5-6D43BBA8B305}|four_wheels_controller.vcxproj|\\\\vwchredir01\\Share\\2427448\\Documents\\Robotics\\diff_drive_robot\\controllers\\four_wheels_controller\\four_wheels_controller.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "four_wheels_controller.c",
+              "DocumentMoniker": "\\\\vwchredir01\\Share\\2427448\\Documents\\Robotics\\diff_drive_robot\\controllers\\four_wheels_controller\\four_wheels_controller.c",
+              "RelativeDocumentMoniker": "four_wheels_controller.c",
+              "ToolTip": "\\\\vwchredir01\\Share\\2427448\\Documents\\Robotics\\diff_drive_robot\\controllers\\four_wheels_controller\\four_wheels_controller.c",
+              "RelativeToolTip": "four_wheels_controller.c",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAACwAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2025-07-11T11:06:55.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
