@@ -11,6 +11,7 @@
  * <webots/motor.h>, etc.
  */
 #include <webots/robot.h>
+#include <webots/camera.h>
 
 /*
  * You may want to add macros here.
@@ -79,6 +80,14 @@ int main(int argc, char **argv) {
   wheels[3] = wb_robot_get_device("front_left_wheel");
 
 
+  // get the camera
+  WbDeviceTag camera = wb_robot_get_device("camera");
+
+
+  // enable the camera
+  wb_camera_enable(camera, TIME_STEP);
+
+
   // go forward
   wheels_set_speed_front(3.0);
   wheels_set_speed_rear(1.5);
@@ -91,6 +100,9 @@ int main(int argc, char **argv) {
   while (wb_robot_step(TIME_STEP) != -1) {
 
       //wheels_set_speed(2.0);
+
+
+      const unsigned char* image = wb_camera_get_image(camera);
 
       wb_console_print("message\n");
       fflush(stdout);
