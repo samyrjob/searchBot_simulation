@@ -1,9 +1,10 @@
 ﻿  four_wheels_controller.c
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(13,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(35,9): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
 C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(36,9): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(107,7): warning C4013: 'wb_console_print' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(118,7): warning C4013: 'wb_console_print' undefined; assuming extern returning int
   Generating code
-  1 of 4 functions (25.0%) were compiled, the rest were copied from previous compilation.
+  1 of 7 functions (14.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

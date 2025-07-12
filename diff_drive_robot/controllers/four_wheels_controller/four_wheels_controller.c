@@ -10,7 +10,7 @@
  * You may need to add include files like <webots/distance_sensor.h> or
  * <webots/motor.h>, etc.
  */
-#include <webots/robot.h>
+#include <webots/robot.h>s
 #include <webots/camera.h>
 
 /*
@@ -80,13 +80,24 @@ int main(int argc, char **argv) {
   wheels[3] = wb_robot_get_device("front_left_wheel");
 
 
+
+
+
+
+
   // get the camera
-  WbDeviceTag camera = wb_robot_get_device("camera");
+  WbDeviceTag camera = wb_robot_get_device("camera_front");
 
 
   // enable the camera
-  wb_camera_enable(camera, TIME_STEP);
-
+  if (camera == 0) {
+      printf("Camera not found!\n");
+      return -1;
+  }
+  else {
+      printf("Camera found!\n");
+      wb_camera_enable(camera, TIME_STEP);
+  }
 
   // go forward
   wheels_set_speed_front(3.0);
