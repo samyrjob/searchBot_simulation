@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
   // go forward
   wheels_set_speed_front(3.0);
-  wheels_set_speed_rear(2.0);
+  wheels_set_speed_rear(1.5);
 
 
   /* main loop

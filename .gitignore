@@ -1,0 +1,26 @@
+# Ignore build artifacts and executables
+*.exe
+*.obj
+*.pdb
+*.ipdb
+*.iobj
+*.suo
+*.vsidx
+*.VC.db*
+*.opendb
+*.backup.json
+*.json
+
+# Ignore Visual Studio cache and temp files
+.vs/
+.vscode/
+*.user
+*.sln.docstates
+
+# Ignore Webots temp files
+build/
+cache/
+
+# Ignore generated files
+diff_drive_robot/controllers/four_whe.B2AA53B0/
+diff_drive_robot/controllers/four_wheels_controller/four_wheels_controller.exe
