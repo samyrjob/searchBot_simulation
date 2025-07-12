@@ -41,9 +41,22 @@ static void wheel_set_speed(WbDeviceTag tag, double speed) {
 }
 
 
-static void wheels_set_speed(double speed) {
+//static void wheels_set_speed(double speed) {
+//    int i;
+//    for (i = 0; i < 4; i++)
+//        wheel_set_speed(wheels[i], speed);
+//}
+
+static void wheels_set_speed_front(double speed) {
     int i;
-    for (i = 0; i < 4; i++)
+    for (i = 2; i < 4; i++)
+        wheel_set_speed(wheels[i], speed);
+}
+
+
+static void wheels_set_speed_rear(double speed) {
+    int i;
+    for (i = 0; i < 2; i++)
         wheel_set_speed(wheels[i], speed);
 }
 
@@ -67,7 +80,8 @@ int main(int argc, char **argv) {
 
 
   // go forward
-  wheels_set_speed(3.0);
+  wheels_set_speed_front(3.0);
+  wheels_set_speed_rear(2.0);
 
 
   /* main loop
