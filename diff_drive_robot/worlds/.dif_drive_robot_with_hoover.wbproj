@@ -8,6 +8,11 @@ orthographicViewHeight: 1
 textFiles: -1
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
+renderingDevicePerspectives: big robot (1):camera_front;0;0.671875;0;0
 renderingDevicePerspectives: big robot (2):camera;1;1;0;0
-renderingDevicePerspectives: big robot (2):camera_front;1;4.34375;0;0
+renderingDevicePerspectives: big robot (2):camera_front;1;0.30625;0;0
+renderingDevicePerspectives: big robot :camera_front;1;0.30625;0;0
+renderingDevicePerspectives: big robot emergency 2:camera_front;0;0.671875;0;0
+renderingDevicePerspectives: big robot emergency:camera_front;0;0.30625;0;0
+renderingDevicePerspectives: big true robot:camera_front;0;0.671875;0;0
 renderingDevicePerspectives: robot:camera;0;0.129167;0;0

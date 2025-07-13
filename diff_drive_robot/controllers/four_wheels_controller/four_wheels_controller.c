@@ -12,6 +12,7 @@
  */
 #include <webots/robot.h>s
 #include <webots/camera.h>
+#include <webots/distance_sensor.h>
 
 /*
  * You may want to add macros here.
@@ -88,6 +89,9 @@ int main(int argc, char **argv) {
   // get the camera
   WbDeviceTag camera = wb_robot_get_device("camera_front");
 
+  // get the IR sensor
+  //WbDeviceTag IRsensor = wb_robot_get_device("ir_sensor");
+
 
   // enable the camera
   if (camera == 0) {
@@ -98,6 +102,21 @@ int main(int argc, char **argv) {
       printf("Camera found!\n");
       wb_camera_enable(camera, TIME_STEP);
   }
+
+
+
+  // enable the ir sensor
+
+  //if (IRsensor == 0) {
+  //    printf("IR sensor not found ! \n");
+  //    return -1;
+  //}
+  //else {
+
+  //    printf("sensor found ! \n");
+  //    wb_distance_sensor_enable(IRsensor, TIME_STEP);
+  //}
+
 
   // go forward
   wheels_set_speed_front(3.0);
@@ -114,6 +133,24 @@ int main(int argc, char **argv) {
 
 
       const unsigned char* image = wb_camera_get_image(camera);
+      int width = wb_camera_get_width(camera);
+      int height = wb_camera_get_height(camera);
+
+      for (int x = 0; x < width; ++x) {
+          for (int y = 0; y < height; ++y) {
+              int r = wb_camera_image_get_red(image, width, x, y);
+              int g = wb_camera_image_get_green(image, width, x, y);
+              int b = wb_camera_image_get_blue(image, width, x, y);
+
+              // moyenne pour niveau de gris
+              int heat = (r + g + b) / 3;
+
+              // ici tu peux faire une LUT (table de couleurs) ou juste une détection de "chaleur"
+              if (heat > 900) {
+                  printf("hot pixel at (%d, %d)\n", x, y);
+              }
+          }
+      }
 
       wb_console_print("message\n");
       fflush(stdout);
