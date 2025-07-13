@@ -10,7 +10,7 @@
  * You may need to add include files like <webots/distance_sensor.h> or
  * <webots/motor.h>, etc.
  */
-#include <webots/robot.h>s
+#include <webots/robot.h>
 #include <webots/camera.h>
 #include <webots/distance_sensor.h>
 
@@ -136,21 +136,21 @@ int main(int argc, char **argv) {
       int width = wb_camera_get_width(camera);
       int height = wb_camera_get_height(camera);
 
-      for (int x = 0; x < width; ++x) {
-          for (int y = 0; y < height; ++y) {
-              int r = wb_camera_image_get_red(image, width, x, y);
-              int g = wb_camera_image_get_green(image, width, x, y);
-              int b = wb_camera_image_get_blue(image, width, x, y);
+      // for (int x = 0; x < width; ++x) {
+          // for (int y = 0; y < height; ++y) {
+              // int r = wb_camera_image_get_red(image, width, x, y);
+              // int g = wb_camera_image_get_green(image, width, x, y);
+              // int b = wb_camera_image_get_blue(image, width, x, y);
 
-              // moyenne pour niveau de gris
-              int heat = (r + g + b) / 3;
+             // moyenne pour; niveau de gris
+              // int heat = (r + g + b) / 3;
 
-              // ici tu peux faire une LUT (table de couleurs) ou juste une détection de "chaleur"
-              if (heat > 900) {
-                  printf("hot pixel at (%d, %d)\n", x, y);
-              }
-          }
-      }
+             // ici tu peux faire une LUT (table de couleurs) ou juste une dï¿½tection de "chaleur"
+              // if (heat > 900) {
+                  // printf("hot pixel at (%d, %d)\n", x, y);
+              // }
+          // }
+      // }
 
       wb_console_print("message\n");
       fflush(stdout);
