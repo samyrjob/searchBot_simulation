@@ -10,6 +10,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/humans/pedestrian/protos/Pedestrian.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/rocks/protos/Rock.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/drinks/protos/WaterBottle.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/fruits/protos/Apple.proto"
 
 WorldInfo {
   contactProperties [
@@ -28,8 +29,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.23686161506985187 0.011183160045102654 0.9714790333496173 3.0499342179371216
-  position 31.178880706081777 20.2125168438966 7.615061654102038
+  orientation 0.3605832667065589 -0.06739669637884768 -0.9302888761500074 3.4859032547389184
+  position 41.32829054177584 12.709161218326464 19.8404316200491
   followType "None"
 }
 TexturedBackground {
@@ -38,7 +39,7 @@ TexturedBackgroundLight {
 }
 RectangleArena {
   translation 0.648999 0.308802 -1.96509e-14
-  rotation 0 0 1 0.0327249
+  rotation 0 0 1 0.0327249000000051
   floorSize 10 10
 }
 DEF OBSTACLE_GRID Solid {
@@ -63,8 +64,8 @@ DEF OBSTACLE_GRID Solid {
   boundingObject USE EG
 }
 DEF Main_Robot Robot {
-  translation -0.3039491013882191 0.3884971112903127 -0.00018874849977883884
-  rotation -0.015729103330991367 -0.015390655443895429 0.9997578321940822 1.5708798846267722
+  translation -0.3039510825329306 0.38849667726437936 -0.0001889333148769115
+  rotation -0.01573330417272985 -0.015392608662765352 0.9997577360232646 1.5709079502108443
   children [
     DistanceSensor {
       translation 0 -0.05 0.04
@@ -182,7 +183,7 @@ DEF Main_Robot Robot {
     }
     DEF wheel+motor1 HingeJoint {
       jointParameters HingeJointParameters {
-        position 3019.195730390278
+        position 3883.8023561326095
         anchor 0.045 0 0.025
       }
       device [
@@ -192,7 +193,7 @@ DEF Main_Robot Robot {
       ]
       endPoint Solid {
         translation 0.045 0 0.025
-        rotation 0.706695114825387 -0.04425828999039503 0.7061325785212428 3.2301218843254205
+        rotation 0.3608230479724376 0.8601282717563902 0.36053582925590844 1.7201157561957074
         children [
           DEF wheel Shape {
             appearance PBRAppearance {
@@ -213,7 +214,7 @@ DEF Main_Robot Robot {
     }
     DEF wheel+motor2 HingeJoint {
       jointParameters HingeJointParameters {
-        position 3023.2096972124114
+        position 3887.81631962331
         anchor -0.045 0 0.025
       }
       device [
@@ -223,7 +224,7 @@ DEF Main_Robot Robot {
       ]
       endPoint Solid {
         translation -0.045 0 0.025
-        rotation -0.4318053919471801 -0.7920763412093034 -0.43146167058248114 4.48214936391486
+        rotation 0.5583998791038396 -0.6139017517713652 0.5579553872747052 4.2434603257816095
         children [
           USE wheel
         ]
@@ -289,8 +290,8 @@ Obstacle {
   name "obstacle(1)"
 }
 Robot {
-  translation 33.89728136718846 16.008546982820707 6.423393904724267
-  rotation -0.5855312020889122 0.8097907399241983 -0.03731177981995698 2.987224318200373
+  translation 104.27968467524992 -42.63063974053802 0.19960208845796074
+  rotation -0.4024353689770303 0.9153602101049908 -0.012706673556380645 3.128599692352687
   children [
     DEF CHASSIS_AND_WHEELS Solid {
       children [
@@ -456,7 +457,7 @@ Robot {
                 }
                 DEF FRONT_LEFT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2503.9584901229996
+                    position 3178.794083196055
                     axis -1 0 0
                     anchor -0.22 -0.22 0
                     dampingConstant 1.5
@@ -469,8 +470,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation -0.2160083084854314 -0.23265263921263948 8.496821226470987e-05
-                    rotation 0.999989674478973 -0.004474846359402528 0.0007916346994096732 3.0324242225623395
+                    translation -0.2160083084854314 -0.20955789169173278 0.007145549154595083
+                    rotation -0.9998302954357104 0.0023574219047852265 -0.01827082075065651 5.7854463898656725
                     children [
                       DEF WHEEL_ROT Pose {
                         translation -0.08 0 0
@@ -502,7 +503,7 @@ Robot {
                 }
                 DEF FRONT_RIGHT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2560.8008704513013
+                    position 3182.9243623623597
                     axis -1 0 0
                     anchor 0.22 -0.22 0
                     dampingConstant 1.5
@@ -511,13 +512,13 @@ Robot {
                     RotationalMotor {
                       name "front_right_wheel"
                       controlPID 10 0.1 1
-                      maxPosition 2557.4286630712186
+                      maxPosition 2560.8008704513013
                       maxTorque 50
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22569773313904662 -0.23286938485887446 0.011683802710696141
-                    rotation 0.9999892608448802 -0.0036918573504306747 0.002801496781052036 2.738710555357145
+                    translation 0.22569773313904662 -0.23179086774606358 0.012771364462074337
+                    rotation -0.9999890434977322 0.003600734286771301 -0.0029912534307190105 3.6326202962611474
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -590,7 +591,7 @@ Robot {
                 }
                 DEF REAR_RIGHT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2058.6812722447903
+                    position 2489.925982552175
                     axis -1 0 0
                     anchor 0.22 0.22 0
                     dampingConstant 1.5
@@ -602,8 +603,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.21966568455138002 0.22344687396241106 0.01409462462522661
-                    rotation -0.9999954447701183 0.002933597096964813 -0.0007102443847426176 2.256136204012956
+                    translation 0.21966568455138002 0.20715956569002558 -0.006757412979093635
+                    rotation -0.9903312851826894 -0.08514019145164123 -0.10952211369390405 6.243861987091216
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -635,7 +636,7 @@ Robot {
                 }
                 DEF REAR_LEFT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2064.170476566651
+                    position 2495.353818279427
                     axis -1 0 0
                     anchor -0.22 0.22 0
                     dampingConstant 1.5
@@ -647,8 +648,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation -0.22235208528054784 0.2304030458458893 0.012854515120574578
-                    rotation 0.9999973884892821 -0.002159914933360297 0.0007468481079948313 3.6372524623502973
+                    translation -0.22235208528054784 0.2035548547901455 -0.0017375617639539109
+                    rotation -0.9998820491031057 0.010190393849249035 0.011491029308618993 0.28952079438208905
                     children [
                       DEF WHEEL_ROT_REAR_LEFT Pose {
                         translation -0.08 0 0
@@ -702,8 +703,8 @@ Robot {
   controller "four_wheels_controller"
 }
 Robot {
-  translation 32.64654109751386 12.473690178777238 5.5652096302243566
-  rotation -0.5954286518157863 0.7765477191928906 -0.20600572907847647 2.6285235853099587
+  translation 21.3933 16.6793 3.6
+  rotation 0.9997794514635719 -0.02023089279399673 0.005635548594178997 0.506283943606819
   children [
     DEF CHASSIS_AND_WHEELS Solid {
       children [
@@ -869,7 +870,7 @@ Robot {
                 }
                 DEF FRONT_LEFT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2503.935437465972
+                    position 3181.975621150405
                     axis -1 0 0
                     anchor -0.22 -0.22 0
                     dampingConstant 1.5
@@ -882,8 +883,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation -0.2160083084854314 -0.23265123596672385 -0.00020670548273049876
-                    rotation 0.9999896861026595 -0.004481149159622502 0.0007395880704259024 3.055476641698548
+                    translation -0.2160083084854314 -0.23071913376989997 -0.006722846857195787
+                    rotation 0.9999891466290776 -0.004631718172609903 -0.0005037964061441947 3.5993004494793275
                     children [
                       DEF WHEEL_ROT Pose {
                         translation -0.08 0 0
@@ -915,7 +916,7 @@ Robot {
                 }
                 DEF FRONT_RIGHT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2561.003926051535
+                    position 3237.547441164414
                     axis -1 0 0
                     anchor 0.22 -0.22 0
                     dampingConstant 1.5
@@ -924,13 +925,13 @@ Robot {
                     RotationalMotor {
                       name "front_right_wheel"
                       controlPID 10 0.1 1
-                      maxPosition 2557.4286630712186
+                      maxPosition 2561.003926051535
                       maxTorque 50
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22569773313904662 -0.23024879093475042 0.014039038314787634
-                    rotation 0.999988683409991 -0.003478820487381134 0.0032451286521477593 2.535657189783494
+                    translation 0.22569773313904662 -0.2278798459312458 -0.015493235315069895
+                    rotation 0.9999818472580906 -0.0058077370849722604 -0.0016047879138565736 4.576130822408334
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -1003,7 +1004,7 @@ Robot {
                 }
                 DEF REAR_RIGHT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2058.570371723179
+                    position 2471.947636106384
                     axis -1 0 0
                     anchor 0.22 0.22 0
                     dampingConstant 1.5
@@ -1015,8 +1016,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.21966568455138002 0.22186580013959423 0.014389516089079624
-                    rotation -0.9999951803997437 0.0030533758014618826 -0.0005622041436236757 2.145236201765493
+                    translation 0.21966568455138002 0.20656187068778234 0.0054732133182350505
+                    rotation -0.9999772392216307 0.006001853786935053 0.003082010675845521 0.8322830960447961
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -1048,7 +1049,7 @@ Robot {
                 }
                 DEF REAR_LEFT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2064.044188401632
+                    position 2477.4267778852445
                     axis -1 0 0
                     anchor -0.22 0.22 0
                     dampingConstant 1.5
@@ -1060,8 +1061,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation -0.22235208528054784 0.22870113705963654 0.014062437047900861
-                    rotation 0.9999972920962843 -0.00224302210814294 0.000620203128921884 3.763540291758136
+                    translation -0.22235208528054784 0.20868509310951883 0.012059635314407253
+                    rotation 0.9999924348255279 -0.003606406349683013 -0.0014574378043434003 5.071175576209982
                     children [
                       DEF WHEEL_ROT_REAR_LEFT Pose {
                         translation -0.08 0 0
@@ -1122,9 +1123,9 @@ Fox {
   rotation 0 0 1 0.3926996938995747
 }
 Pedestrian {
-  translation 23.7066 21.155 3.8
-  rotation 0 0 1 1.7016996938995748
-  name "missing_person"
+  translation 20.7519 15.9711 4
+  rotation 0 0 -1 0.18325599999999936
+  name "missing_person(1)"
   shirtColor 0.333333 0.666667 1
   pantsColor 0 0 0
   shoesColor 0.235294 0.27451 0.278431
@@ -1158,5 +1159,187 @@ Rock {
   name "rock(6)"
 }
 WaterBottle {
-  translation 23.6653 21.585 2.5
+  translation -12340.969353524191 -5662.47642623155 1810.6372876732885
+  rotation -0.7243720029489747 -0.17924620974005373 0.6656996301918121 3.022225555004656
+}
+Apple {
+  translation 24.141399143280786 20.669302243452897 2.5555467229281845
+  rotation 0.6902630210950493 -0.5316863504843453 0.4907612315753696 -1.403423948980854
+}
+Solid {
+  translation 21.6007 16.522 3.9
+  rotation 0 0 1 1.32209
+  children [
+    Solid {
+      translation -1.24 1.2 -0.2
+      rotation 3.29395897757601e-06 0.9999999999945742 -3.673811626809401e-08 0.0028726852119817176
+      children [
+        DEF LEFT_SIDE_CAVE Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 0.2 3.6 2.1
+          }
+        }
+      ]
+      name "left_side_cave"
+      boundingObject USE LEFT_SIDE_CAVE
+      physics Physics {
+      }
+    }
+    Solid {
+      translation 1.26 1.2 -0.25
+      rotation 2.5860907687234238e-09 -1 1.0106202679450046e-10 0.022587983513117697
+      children [
+        DEF RIGHT_SIDE_CAVE Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 0.2 3.6 2.1
+          }
+        }
+      ]
+      name "right_side_cave"
+      boundingObject USE RIGHT_SIDE_CAVE
+      physics Physics {
+      }
+    }
+    Solid {
+      translation 0 0.5 -1.4
+      rotation 1.6167569155835418e-07 0.9999999999998425 -5.376666655918282e-07 7.189814669505993e-05
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 2.7 2.2 0.3
+          }
+        }
+      ]
+      name "bottom_cave"
+      boundingObject Box {
+        size 2 1 0.2
+      }
+      physics Physics {
+      }
+    }
+    Solid {
+      translation 0 0.2 -1.7
+      rotation 1.6167569155835418e-07 0.9999999999998425 -5.376666655918282e-07 7.189814669505993e-05
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 2.7 2.2 0.3
+          }
+        }
+      ]
+      name "bottom_cave(1)"
+      boundingObject Box {
+        size 2 1 0.2
+      }
+      physics Physics {
+      }
+    }
+    Solid {
+      translation -1.15192e-05 1.05082 -0.15
+      rotation 1 0 0 0
+      children [
+        DEF BACK_CAVE Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 2.3 0.1 2
+          }
+        }
+      ]
+      name "back_cave"
+      boundingObject USE BACK_CAVE
+      physics Physics {
+      }
+    }
+    Solid {
+      translation -1.15192e-05 1.05082 -0.15
+      rotation 1 0 0 0
+      children [
+        DEF BACK_CAVE Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 0
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 2.4 0.1 2
+          }
+        }
+      ]
+      name "inside_cave_realism"
+      boundingObject USE BACK_CAVE
+      physics Physics {
+      }
+    }
+    Solid {
+      translation -1.15192e-05 1.3 0.8
+      rotation 1 0 0 -1.5707996938995747
+      children [
+        DEF BACK_CAVE Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "../textures/desert_texture.jpg"
+              ]
+            }
+            roughness 0.7
+          }
+          geometry Box {
+            size 2.66 0.2 3.8
+          }
+        }
+      ]
+      name "back_cave(1)"
+      boundingObject USE BACK_CAVE
+      physics Physics {
+      }
+    }
+  ]
+  name "stone_shelter"
+}
+WaterBottle {
+  translation 23.3 21.15 2.52
+  name "water bottle(1)"
 }
