@@ -8,8 +8,9 @@ orthographicViewHeight: 1
 textFiles: -1
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
-renderingDevicePerspectives: big emergency robot(1):camera_front;1;0.410938;0;0
+renderingDevicePerspectives: big emergency robot(1):camera_front;1;0.425;0;0
 renderingDevicePerspectives: big emergency robot(2):camera_front;1;0.417188;0;0
+renderingDevicePerspectives: big emergency robot(3):camera_front;1;0.4125;0;0
 renderingDevicePerspectives: big emergency robot:camera_front;0;0.359304;0.085188;0.463068
 renderingDevicePerspectives: big robot (1):camera_front;0;0.671875;0;0
 renderingDevicePerspectives: big robot (2):camera;1;1;0;0
