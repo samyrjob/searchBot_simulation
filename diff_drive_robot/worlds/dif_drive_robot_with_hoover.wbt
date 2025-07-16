@@ -195,7 +195,7 @@ DEF Main_Robot Robot {
       ]
       endPoint Solid {
         translation 0.045 0 0.025
-        rotation 0.707361902974955 -0.008633874499093494 0.7067988359008411 3.1588737287623534
+        rotation 0.707361902974955 -0.008633874499093499 0.7067988359008411 3.1588737287623534
         children [
           DEF wheel Shape {
             appearance PBRAppearance {
@@ -374,7 +374,7 @@ Robot {
                                 Camera {
                                   rotation 0.7071067811865476 -0.7071067811865476 0 3.14159
                                   name "camera_front"
-                                  fieldOfView 0.9000000000000006
+                                  fieldOfView 1.0000000000000007
                                   width 640
                                   height 640
                                   far 20
@@ -611,7 +611,7 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22 0.21 4.83554168928535e-17
+                    translation 0.22 0.21 4.96564594998361e-17
                     rotation 0.9999940210622427 -0.0010710907024156261 0.0032879483684872678 1.8918579176364898
                     children [
                       DEF WHEEL_ROT Pose {
@@ -896,7 +896,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation -0.22 -0.22 0
-                    rotation -0.9999404302162779 0.006036222624180906 0.009093955977269162 0.818155823736367
+                    rotation -0.999940430216278 0.0060362226241809066 0.009093955977269164 0.818155823736367
                     children [
                       DEF WHEEL_ROT Pose {
                         translation -0.08 0 0
@@ -1028,7 +1028,7 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22 0.21 2.8080836267374565e-17
+                    translation 0.22 0.21 2.938187887435717e-17
                     rotation 0.9999940210622427 -0.0010710907024156344 0.0032879483684872847 1.8918579176364883
                     children [
                       DEF WHEEL_ROT Pose {
