@@ -34,6 +34,42 @@ static WbDeviceTag wheels[4];
  */
 
 
+ // Convert axis-angle to quaternion
+void axis_angle_to_quat(double axis[3], double angle, double q[4]) {
+    double half = angle / 2.0;
+    double sin_half = sin(half);
+    q[0] = cos(half);
+    q[1] = axis[0] * sin_half;
+    q[2] = axis[1] * sin_half;
+    q[3] = axis[2] * sin_half;
+}
+
+// Multiply two quaternions: q = q1 * q2
+void quat_multiply(double q1[4], double q2[4], double q[4]) {
+    q[0] = q1[0] * q2[0] - q1[1] * q2[1] - q1[2] * q2[2] - q1[3] * q2[3];
+    q[1] = q1[0] * q2[1] + q1[1] * q2[0] + q1[2] * q2[3] - q1[3] * q2[2];
+    q[2] = q1[0] * q2[2] - q1[1] * q2[3] + q1[2] * q2[0] + q1[3] * q2[1];
+    q[3] = q1[0] * q2[3] + q1[1] * q2[2] - q1[2] * q2[1] + q1[3] * q2[0];
+}
+
+// Convert quaternion to axis-angle for Webots
+void quat_to_axis_angle(double q[4], double axis_angle[4]) {
+    double sin_half_angle = sqrt(q[1] * q[1] + q[2] * q[2] + q[3] * q[3]);
+    if (sin_half_angle < 1e-6) {
+        axis_angle[0] = 1.0;
+        axis_angle[1] = 0.0;
+        axis_angle[2] = 0.0;
+        axis_angle[3] = 0.0;
+    }
+    else {
+        axis_angle[0] = q[1] / sin_half_angle;
+        axis_angle[1] = q[2] / sin_half_angle;
+        axis_angle[2] = q[3] / sin_half_angle;
+        axis_angle[3] = 2.0 * acos(q[0]);
+    }
+}
+
+
 
 
 
@@ -126,11 +162,11 @@ int main(int argc, char** argv) {
         int width = wb_camera_get_width(camera);
         int height = wb_camera_get_height(camera);
 
-        printf("Initial FOV: %f\n", fov);
+      /*  printf("Initial FOV: %f\n", fov);
 
         printf("Min FOV: %f\n", min_fov);
 
-        printf("Max FOV: %f\n", max_fov);
+        printf("Max FOV: %f\n", max_fov);*/
 
         // Default: stop
         double left_speed = 0.0;
@@ -167,12 +203,68 @@ int main(int argc, char** argv) {
                 if (fov > 1.7) fov = 1.7;
                 wb_camera_set_fov(camera, fov);
             }
+
+
+
+            //    if (roll > 1.55) roll = 1.55;
+
+
+
+
+         
+
+            //    if (roll < -1.55) roll = -1.55;
+
+        
+
+
+
+            // Update pitch (A/E)
+            if (key == 'A' || key == 'a') pitch += ANGLE_STEP;
+            if (key == 'E' || key == 'e') pitch -= ANGLE_STEP;
+            if (pitch > 1.5) pitch = 1.5;
+            if (pitch < -0.4) pitch = -0.4;
+
+            // Update roll (D/Q)
+            if (key == 'D' || key == 'd') roll += ANGLE_STEP;
+            if (key == 'Q' || key == 'q') roll -= ANGLE_STEP;
+            if (roll > 1.55) roll = 1.55;
+            if (roll < -1.55) roll = -1.55;
+
+
+            // Compute combined pitch + roll rotation using quaternion math
+            double pitch_axis[3] = { 1, 0, 0 };  // X axis
+            double roll_axis[3] = { 0, 0, 1 };   // Z axis
+
+            double pitch_q[4], roll_q[4], combined_q[4], final_rot[4];
+
+            axis_angle_to_quat(pitch_axis, pitch, pitch_q);
+            axis_angle_to_quat(roll_axis, roll, roll_q);
+
+            // Combine them: apply roll *then* pitch (change order if needed)
+            quat_multiply(roll_q, pitch_q, combined_q);
+            quat_to_axis_angle(combined_q, final_rot);
+
+            // Apply combined rotation to Webots object
+            wb_supervisor_field_set_sf_rotation(rotation_field, final_rot);
         }
 
         // Apply final speed
         set_wheel_speeds(left_speed, right_speed);
 
-   /*     printf("AMENDED FOV: %f\n", fov);*/
+        // Combine pitch and roll using a simplified logic:
+       // 1. Apply pitch (Y axis)
+       // 2. Then apply roll (X axis)
+
+
+       
+
+        printf("roll angle value equals to: %f \n ", roll);
+
+        // Then: roll rotation
+        // NOTE: This will override the above unless we compose both (see next)
+        
+        // ❗Only one rotation can be set like this — for full combo, we need quaternion math
 
 
 
