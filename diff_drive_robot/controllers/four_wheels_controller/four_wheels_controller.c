@@ -228,6 +228,10 @@ int main(int argc, char** argv) {
             // Update roll (D/Q)
             if (key == 'D' || key == 'd') roll += ANGLE_STEP;
             if (key == 'Q' || key == 'q') roll -= ANGLE_STEP;
+            if (roll > 1.55) roll = 1.55;
+            if (roll < -1.55) roll = -1.55;
+
+
             // Compute combined pitch + roll rotation using quaternion math
             double pitch_axis[3] = { 1, 0, 0 };  // X axis
             double roll_axis[3] = { 0, 0, 1 };   // Z axis
