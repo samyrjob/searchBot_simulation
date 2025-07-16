@@ -126,11 +126,11 @@ int main(int argc, char** argv) {
         int width = wb_camera_get_width(camera);
         int height = wb_camera_get_height(camera);
 
-        printf("Initial FOV: %f\n", fov);
+      /*  printf("Initial FOV: %f\n", fov);
 
         printf("Min FOV: %f\n", min_fov);
 
-        printf("Max FOV: %f\n", max_fov);
+        printf("Max FOV: %f\n", max_fov);*/
 
         // Default: stop
         double left_speed = 0.0;
@@ -167,12 +167,59 @@ int main(int argc, char** argv) {
                 if (fov > 1.7) fov = 1.7;
                 wb_camera_set_fov(camera, fov);
             }
+
+            // Rotate up/down (pitch) around Y axis
+            if (key == 'A' || key == 'a') {
+                pitch += ANGLE_STEP;
+
+
+                if (pitch > 1.5) pitch = 1.5;
+                // First: pitch rotation
+                double pitch_rot[4] = { 1, 0, 0, pitch }; // X but actually Y axis
+                wb_supervisor_field_set_sf_rotation(rotation_field, pitch_rot);
+
+            }
+
+            // limit pitch A -> 1.5
+           
+
+            if (key == 'E' || key == 'e') { 
+                
+                pitch -= ANGLE_STEP; 
+
+
+
+                if (pitch < -0.4) pitch = -0.4;
+                double pitch_rot[4] = { 1, 0, 0, pitch }; // X but actually Y axis
+                wb_supervisor_field_set_sf_rotation(rotation_field, pitch_rot);
+            
+            }
+
+
+            // limit pitch E -> - 0.4
+
+            //// Rotate left/right (roll) around X axis
+            //if (key == 'Q' || key == 'q') roll += ANGLE_STEP;
+            //if (key == 'D' || key == 'd') roll -= ANGLE_STEP;
         }
 
         // Apply final speed
         set_wheel_speeds(left_speed, right_speed);
 
-   /*     printf("AMENDED FOV: %f\n", fov);*/
+        // Combine pitch and roll using a simplified logic:
+       // 1. Apply pitch (Y axis)
+       // 2. Then apply roll (X axis)
+
+
+       
+
+        printf("pitch angle value equals to: %f \n ", pitch);
+
+        // Then: roll rotation
+        // NOTE: This will override the above unless we compose both (see next)
+        //double roll_rot[4] = { 1, 0, 0, roll };  // X axis
+        //wb_supervisor_field_set_sf_rotation(rotation_field, roll_rot);
+        // ❗Only one rotation can be set like this — for full combo, we need quaternion math
 
 
 
