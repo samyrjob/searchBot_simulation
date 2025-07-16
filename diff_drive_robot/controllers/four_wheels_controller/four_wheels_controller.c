@@ -198,9 +198,32 @@ int main(int argc, char** argv) {
 
             // limit pitch E -> - 0.4
 
-            //// Rotate left/right (roll) around X axis
-            //if (key == 'Q' || key == 'q') roll += ANGLE_STEP;
-            //if (key == 'D' || key == 'd') roll -= ANGLE_STEP;
+            //// Rotate left/right (roll) around Z axis
+            if (key == 'D' || key == 'd') {
+
+                roll += ANGLE_STEP;
+
+
+                if (roll > 1.55) roll = 1.55;
+
+                double roll_rot[4] = { 0, 0, 1, roll };  // Z axis
+                wb_supervisor_field_set_sf_rotation(rotation_field, roll_rot);
+
+
+
+            }
+            
+           
+            if (key == 'Q' || key == 'q') {
+            
+                roll -= ANGLE_STEP;
+
+                if (roll < -1.55) roll = -1.55;
+
+                double roll_rot[4] = { 0, 0, 1, roll };  // Z axis
+                wb_supervisor_field_set_sf_rotation(rotation_field, roll_rot);
+            
+            }
         }
 
         // Apply final speed
@@ -213,12 +236,11 @@ int main(int argc, char** argv) {
 
        
 
-        printf("pitch angle value equals to: %f \n ", pitch);
+        printf("roll angle value equals to: %f \n ", roll);
 
         // Then: roll rotation
         // NOTE: This will override the above unless we compose both (see next)
-        //double roll_rot[4] = { 1, 0, 0, roll };  // X axis
-        //wb_supervisor_field_set_sf_rotation(rotation_field, roll_rot);
+        
         // ❗Only one rotation can be set like this — for full combo, we need quaternion math
 
 
