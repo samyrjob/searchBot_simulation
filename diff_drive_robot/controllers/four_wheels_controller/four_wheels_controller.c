@@ -20,6 +20,8 @@
  * You may want to add macros here.
  */
 #define TIME_STEP 64
+#define FOV_STEP 0.01
+#define ANGLE_STEP 0.05
 
 
  // motor wheels
@@ -71,9 +73,21 @@ int main(int argc, char** argv) {
 
 
 
+    // Get camera node
+    WbNodeRef cam_node = wb_supervisor_node_get_from_def("POSE_CAMERA");
+    WbFieldRef rotation_field = wb_supervisor_node_get_field(cam_node, "rotation");
 
-    // get the camera
+
+    // get the camera device
     WbDeviceTag camera = wb_robot_get_device("camera_front");
+    double fov = wb_camera_get_fov(camera);
+    double min_fov = wb_camera_get_min_fov(camera);
+    double max_fov = wb_camera_get_max_fov(camera);
+
+
+    // Rotation angles
+    double pitch = 0.0;  // up/down (around Y)
+    double roll = 0.0;   // tilt left/right (around X)
 
 
 
@@ -112,6 +126,12 @@ int main(int argc, char** argv) {
         int width = wb_camera_get_width(camera);
         int height = wb_camera_get_height(camera);
 
+        printf("Initial FOV: %f\n", fov);
+
+        printf("Min FOV: %f\n", min_fov);
+
+        printf("Max FOV: %f\n", max_fov);
+
         // Default: stop
         double left_speed = 0.0;
         double right_speed = 0.0;
@@ -135,10 +155,24 @@ int main(int argc, char** argv) {
                 left_speed += 1.5;
                 right_speed -= 1.5;
             }
+
+            // Zoom in/out
+            if (key == 'Z' || key == 'z') {
+                fov -= FOV_STEP;
+                if (fov < 0.1) fov = 0.1;
+                wb_camera_set_fov(camera, fov);
+            }
+            if (key == 'S' || key == 's') {
+                fov += FOV_STEP;
+                if (fov > 1.7) fov = 1.7;
+                wb_camera_set_fov(camera, fov);
+            }
         }
 
         // Apply final speed
         set_wheel_speeds(left_speed, right_speed);
+
+   /*     printf("AMENDED FOV: %f\n", fov);*/
 
 
 
@@ -149,6 +183,8 @@ int main(int argc, char** argv) {
          for (int i = 0; i < count; ++i) {
              int object_id = objects[i].id;
              WbNodeRef object_node = wb_supervisor_node_get_from_id(object_id);
+             const char* model = objects[i].model;
+             printf("Detected object type (model): %s\n", model);
 
              if (object_node) {
                  WbFieldRef name_field = wb_supervisor_node_get_field(object_node, "name");
@@ -158,6 +194,11 @@ int main(int argc, char** argv) {
                      if (name)
                          printf("Detected object with name: %s\n", name);
                  }
+
+
+                const double* position = wb_supervisor_node_get_position(object_node);
+                printf("Object %d world coordinates: x=%.2f, y=%.2f, z=%.2f\n",
+                    object_id, position[0], position[1], position[2]);
              }
          }
 
