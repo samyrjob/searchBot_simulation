@@ -11,6 +11,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/rocks/protos/Rock.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/drinks/protos/WaterBottle.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/fruits/protos/Apple.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Dog.proto"
 
 WorldInfo {
   contactProperties [
@@ -29,9 +30,10 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.3425509437888527 -0.028088260354528837 0.9390792834152091 3.295301582133188
-  position 43.668605891500064 21.146749947650132 19.443607340010793
-  follow "big emergency robot(1)"
+  orientation -0.35205944060923455 0.004642381685067709 0.9359661311020836 3.1169179702700123
+  position 32.17136085796028 15.488754083738026 11.225103469488285
+  follow "big emergency robot(2)"
+  followType "Mounted Shot"
 }
 TexturedBackground {
 }
@@ -193,7 +195,7 @@ DEF Main_Robot Robot {
       ]
       endPoint Solid {
         translation 0.045 0 0.025
-        rotation 0.707361902974955 -0.008633874499093416 0.7067988359008411 3.1588737287623534
+        rotation 0.707361902974955 -0.008633874499093466 0.7067988359008411 3.1588737287623534
         children [
           DEF wheel Shape {
             appearance PBRAppearance {
@@ -355,8 +357,8 @@ Robot {
                         jointParameters HingeJointParameters {
                         }
                         endPoint Solid {
-                          translation 0 0 -0.43
-                          rotation 0 1 0 0
+                          translation 0 -0.018 -0.41
+                          rotation 1 0 0 0
                           children [
                             Shape {
                               appearance PBRAppearance {
@@ -367,15 +369,20 @@ Robot {
                                 radius 0.03
                               }
                             }
-                            Pose {
+                            DEF POSE_CAMERA Pose {
                               children [
                                 Camera {
                                   rotation 0.7071067811865476 -0.7071067811865476 0 3.14159
                                   name "camera_front"
+                                  fieldOfView 1.7
                                   width 640
                                   height 640
                                   far 20
                                   antiAliasing TRUE
+                                  zoom Zoom {
+                                    maxFieldOfView 1.7
+                                    minFieldOfView 0.1
+                                  }
                                   recognition Recognition {
                                     frameThickness 3
                                   }
@@ -383,6 +390,7 @@ Robot {
                               ]
                             }
                           ]
+                          name "solid_camera_nested"
                         }
                       }
                     ]
@@ -471,7 +479,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation -0.22 -0.22 0
-                    rotation -0.999940430216278 0.0060362226241809066 0.009093955977269164 0.818155823736367
+                    rotation -0.9999404302162828 0.006036222623932056 0.00909395597689425 0.8181558237363653
                     children [
                       DEF WHEEL_ROT Pose {
                         translation -0.08 0 0
@@ -518,7 +526,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation 0.22 -0.22 0
-                    rotation 0.9999869762458772 -0.0030183841837907403 0.004115421672998823 2.146984838194384
+                    rotation 0.9999869762458777 -0.003018384183724116 0.004115421672907984 2.1469848381943866
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -603,8 +611,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22 0.21 4.553649124439119e-18
-                    rotation 0.9999940210622427 -0.0010710907024156354 0.0032879483684872847 1.8918579176364883
+                    translation 0.22 0.21 4.141652298894627e-17
+                    rotation 0.9999940210622427 -0.0010710907024156283 0.0032879483684872673 1.8918579176364898
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -649,7 +657,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation -0.22 0.22 0
-                    rotation 0.9999908303536916 -0.00039335249250369806 0.004264326717178836 1.2086318757225112
+                    rotation 0.9999908303536916 -0.00039335249250369665 0.004264326717178815 1.2086318757225112
                     children [
                       DEF WHEEL_ROT_REAR_LEFT Pose {
                         translation -0.08 0 0
@@ -707,7 +715,7 @@ Robot {
   supervisor TRUE
 }
 Robot {
-  translation 20.4142 16.9687 5.03507
+  translation 22.3627 11.3594 2.53507
   rotation 0.5366249816107759 0.8330948035840459 0.13411441888363262 3.0608182987840653
   children [
     DEF CHASSIS_AND_WHEELS Solid {
@@ -888,7 +896,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation -0.22 -0.22 0
-                    rotation -0.999940430216278 0.0060362226241809066 0.009093955977269164 0.818155823736367
+                    rotation -0.9999404302162779 0.006036222624180906 0.009093955977269162 0.818155823736367
                     children [
                       DEF WHEEL_ROT Pose {
                         translation -0.08 0 0
@@ -1020,8 +1028,8 @@ Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22 0.21 4.553649124439119e-18
-                    rotation 0.9999940210622427 -0.0010710907024156354 0.0032879483684872847 1.8918579176364883
+                    translation 0.22 0.21 2.0599841277224584e-17
+                    rotation 0.9999940210622427 -0.0010710907024156344 0.0032879483684872847 1.8918579176364883
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -1113,7 +1121,7 @@ Robot {
       }
     }
   ]
-  name "big emergency robot(1)"
+  name "big emergency robot(3)"
   physics Physics {
     mass 2
     centerOfMass [
@@ -1121,6 +1129,7 @@ Robot {
     ]
   }
   controller "four_wheels_controller"
+  supervisor TRUE
 }
 PalmTree {
   translation 23.3487 21.6833 2.5000000000000058
@@ -1346,4 +1355,8 @@ WaterBottle {
   translation 20.8948 16.575 2.6293800000000003
   rotation 0.7945644658006661 0.6069409380678548 -0.017029603172557053 0.18488732131537416
   name "water bottle(1)"
+}
+Dog {
+  translation 21.2244 17.7205 2.6
+  rotation 0 0 -1 0.281434
 }
