@@ -118,8 +118,8 @@ int main(int argc, char **argv) {
      // 📌 READ the current rotation
     const double *current_rotation = wb_supervisor_field_get_sf_rotation(rotation_field);
   
-    printf("Current rotation: axis == (%f, %f, %f), angle = %f radians\n",
-           current_rotation[0], current_rotation[1], current_rotation[2], current_rotation[3]);
+    //printf("Current rotation: axis == (%f, %f, %f), angle = %f radians\n",
+           //current_rotation[0], current_rotation[1], current_rotation[2], current_rotation[3]);
            
            
   

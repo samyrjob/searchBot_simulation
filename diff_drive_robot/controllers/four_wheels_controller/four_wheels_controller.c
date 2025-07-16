@@ -14,6 +14,7 @@
 #include <webots/camera.h>
 #include <webots/distance_sensor.h>
 #include <webots/keyboard.h>
+#include <webots/supervisor.h>
 
 /*
  * You may want to add macros here.
@@ -41,8 +42,8 @@ void set_wheel_speeds(double left, double right) {
     wb_motor_set_position(wheels[2], INFINITY); // front_right
     wb_motor_set_position(wheels[3], INFINITY); // front_left
 
-    wb_motor_set_velocity(wheels[0], 3.0);
-    wb_motor_set_velocity(wheels[1], 3.0);
+    wb_motor_set_velocity(wheels[0], right);
+    wb_motor_set_velocity(wheels[1], left);
     wb_motor_set_velocity(wheels[2], right);
     wb_motor_set_velocity(wheels[3], left);
 }
@@ -74,8 +75,6 @@ int main(int argc, char** argv) {
     // get the camera
     WbDeviceTag camera = wb_robot_get_device("camera_front");
 
-    // get the IR sensor
-    //WbDeviceTag IRsensor = wb_robot_get_device("ir_sensor");
 
 
     // enable the camera
@@ -87,6 +86,11 @@ int main(int argc, char** argv) {
         printf("Camera found!\n");
         wb_camera_enable(camera, TIME_STEP);
     }
+
+
+
+    // Enable camera recognition
+    wb_camera_recognition_enable(camera, TIME_STEP);
 
     //enable the keyboard 
     wb_keyboard_enable(TIME_STEP);
@@ -108,44 +112,76 @@ int main(int argc, char** argv) {
         int width = wb_camera_get_width(camera);
         int height = wb_camera_get_height(camera);
 
-        int key = wb_keyboard_get_key();
+        // Default: stop
+        double left_speed = 0.0;
+        double right_speed = 0.0;
 
-        switch (key) {
-        case WB_KEYBOARD_UP:
-            set_wheel_speeds(3.0, 3.0); // forward
-            break;
-        case WB_KEYBOARD_DOWN:
-            set_wheel_speeds(-3.0, -3.0); // backward
-            break;
-        case WB_KEYBOARD_LEFT:
-            set_wheel_speeds(-2.0, 2.0); // turn left
-            break;
-        case WB_KEYBOARD_RIGHT:
-            set_wheel_speeds(2.0, -2.0); // turn right
-            break;
-        case -1:
-            set_wheel_speeds(0.0, 0.0); // stop
-            break;
+        // Collect all pressed keys
+        int key;
+        while ((key = wb_keyboard_get_key()) != -1) {
+            if (key == WB_KEYBOARD_UP) {
+                left_speed += 6.0;
+                right_speed += 6.0;
+            }
+            if (key == WB_KEYBOARD_DOWN) {
+                left_speed -= 3.0;
+                right_speed -= 3.0;
+            }
+            if (key == WB_KEYBOARD_LEFT) {
+                left_speed -= 1.5;  // Reduce left, increase right to turn
+                right_speed += 1.5;
+            }
+            if (key == WB_KEYBOARD_RIGHT) {
+                left_speed += 1.5;
+                right_speed -= 1.5;
+            }
+        }
+
+        // Apply final speed
+        set_wheel_speeds(left_speed, right_speed);
+
+
+
+
+         int count = wb_camera_recognition_get_number_of_objects(camera);
+         const WbCameraRecognitionObject* objects = wb_camera_recognition_get_objects(camera);
+
+         for (int i = 0; i < count; ++i) {
+             int object_id = objects[i].id;
+             WbNodeRef object_node = wb_supervisor_node_get_from_id(object_id);
+
+             if (object_node) {
+                 WbFieldRef name_field = wb_supervisor_node_get_field(object_node, "name");
+
+                 if (name_field) {
+                     const char* name = wb_supervisor_field_get_sf_string(name_field);
+                     if (name)
+                         printf("Detected object with name: %s\n", name);
+                 }
+             }
+         }
+
+
+
+
+
+
+
+
 
 
 
             wb_console_print("message\n");
             fflush(stdout);
-            /*
-             * Read the sensors :
-             * Enter here functions to read sensor data, like:
-             *  double val = wb_distance_sensor_get_value(my_sensor);
-             */
+            
 
-             /* Process sensor data here */
 
-             /*
-              * Enter here functions to send actuator commands, like:
-              * wb_motor_set_position(my_actuator, 10.0);
-              */
+
+
+
+
+
         };
-
-    }
 
         /* Enter your cleanup code here */
 
