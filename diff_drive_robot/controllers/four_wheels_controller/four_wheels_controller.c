@@ -15,6 +15,8 @@
 #include <webots/distance_sensor.h>
 #include <webots/keyboard.h>
 #include <webots/supervisor.h>
+#include <webots/speaker.h>
+#include <stdbool.h>
 
 /*
  * You may want to add macros here.
@@ -22,6 +24,7 @@
 #define TIME_STEP 64
 #define FOV_STEP 0.01
 #define ANGLE_STEP 0.05
+#define PLAY_INTERVAL 10000  // 10 seconds in milliseconds
 
 
  // motor wheels
@@ -87,16 +90,18 @@ void set_wheel_speeds(double left, double right) {
 }
 
 
+
+   
+
+
 int main(int argc, char** argv) {
     /* necessary to initialize webots stuff */
     wb_robot_init();
 
-    /*
-     * You should declare here WbDeviceTag variables for storing
-     * robot devices like this:
-     *  WbDeviceTag my_sensor = wb_robot_get_device("my_sensor");
-     *  WbDeviceTag my_actuator = wb_robot_get_device("my_actuator");
-     */
+
+    // Get the speaker device by its name "speaker"
+    WbDeviceTag speaker = wb_robot_get_device("speaker");
+    printf("Speaker tag: %d\n", speaker);
 
      // all vehicles
     wheels[0] = wb_robot_get_device("rear_right_wheel");
@@ -145,6 +150,11 @@ int main(int argc, char** argv) {
     //enable the keyboard 
     wb_keyboard_enable(TIME_STEP);
 
+    bool play_loop = false;
+    int elapsed_time = 0;
+
+    const char* sound_path = "searchbot_message.wav";
+
 
 
 
@@ -155,18 +165,16 @@ int main(int argc, char** argv) {
      */
     while (wb_robot_step(TIME_STEP) != -1) {
 
-        //wheels_set_speed(2.0);
+
+  
+
 
 
         const unsigned char* image = wb_camera_get_image(camera);
         int width = wb_camera_get_width(camera);
         int height = wb_camera_get_height(camera);
 
-      /*  printf("Initial FOV: %f\n", fov);
-
-        printf("Min FOV: %f\n", min_fov);
-
-        printf("Max FOV: %f\n", max_fov);*/
+  
 
         // Default: stop
         double left_speed = 0.0;
@@ -175,6 +183,27 @@ int main(int argc, char** argv) {
         // Collect all pressed keys
         int key;
         while ((key = wb_keyboard_get_key()) != -1) {
+
+
+
+
+            // Toggle playback on key 'T'
+            if (key == 'T' || key == 't') {
+                play_loop = !play_loop;
+                if (play_loop) {
+                    printf(">> Playback started.\n");
+                }
+                else {
+                    printf(">> Playback stopped.\n");
+                    wb_speaker_stop(speaker, NULL);  // stop all sounds
+                    elapsed_time = 0;
+                }
+            }
+
+         
+
+
+      
             if (key == WB_KEYBOARD_UP) {
                 left_speed += 6.0;
                 right_speed += 6.0;
@@ -206,14 +235,6 @@ int main(int argc, char** argv) {
 
 
 
-            //    if (roll > 1.55) roll = 1.55;
-
-
-
-
-         
-
-            //    if (roll < -1.55) roll = -1.55;
 
         
 
@@ -252,14 +273,28 @@ int main(int argc, char** argv) {
         // Apply final speed
         set_wheel_speeds(left_speed, right_speed);
 
-        // Combine pitch and roll using a simplified logic:
-       // 1. Apply pitch (Y axis)
-       // 2. Then apply roll (X axis)
+
+        // apply sound settings
+
+         // If playback is active, play sound every 10 seconds
+        if (play_loop) {
+            elapsed_time += TIME_STEP;
+            if (elapsed_time >= PLAY_INTERVAL) {
+                wb_speaker_play_sound(speaker, speaker, sound_path,
+                    1.0,   // volume (0.0 to 1.0)
+                    1.0,   // pitch (1.0 = default)
+                    0.0,   // balance (-1.0 to 1.0, 0 = center)
+                    false  // loop
+                );
+                elapsed_time = 0;
+            }
+
+        }
 
 
        
 
-        printf("roll angle value equals to: %f \n ", roll);
+
 
         // Then: roll rotation
         // NOTE: This will override the above unless we compose both (see next)
@@ -295,17 +330,6 @@ int main(int argc, char** argv) {
          }
 
 
-
-
-
-
-
-
-
-
-
-            wb_console_print("message\n");
-            fflush(stdout);
             
 
 

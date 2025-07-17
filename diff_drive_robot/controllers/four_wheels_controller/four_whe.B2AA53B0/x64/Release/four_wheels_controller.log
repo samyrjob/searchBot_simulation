@@ -1,7 +1,21 @@
 ﻿  four_wheels_controller.c
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(78,5): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(83,5): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(307,13): warning C4013: 'wb_console_print' undefined; assuming extern returning int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdbool.h(15,9): warning C4005: 'bool': macro redefinition
+  (compiling source file 'four_wheels_controller.c')
+      C:\Program Files\Webots\include\controller\c\webots\types.h(52,9):
+      see previous definition of 'bool'
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdbool.h(16,9): warning C4005: 'false': macro redefinition
+  (compiling source file 'four_wheels_controller.c')
+      C:\Program Files\Webots\include\controller\c\webots\types.h(63,9):
+      see previous definition of 'false'
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdbool.h(17,9): warning C4005: 'true': macro redefinition
+  (compiling source file 'four_wheels_controller.c')
+      C:\Program Files\Webots\include\controller\c\webots\types.h(57,9):
+      see previous definition of 'true'
+  
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(81,5): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(86,5): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
   Generating code
   1 of 8 functions (12.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
