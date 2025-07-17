@@ -156,6 +156,15 @@ int main(int argc, char** argv) {
     const char* sound_path = "searchbot_message.wav";
 
 
+    // get rotational camera
+    WbDeviceTag cam_motor = wb_robot_get_device("camera_motor");
+    WbDeviceTag rotating_camera = wb_robot_get_device("rotating_camera");
+    wb_camera_enable(rotating_camera, TIME_STEP);
+
+    // Rotate continuously
+    wb_motor_set_velocity(cam_motor, 1.0);
+
+
 
 
 
@@ -209,16 +218,16 @@ int main(int argc, char** argv) {
                 right_speed += 6.0;
             }
             if (key == WB_KEYBOARD_DOWN) {
-                left_speed -= 3.0;
-                right_speed -= 3.0;
+                left_speed -= 6.0;
+                right_speed -= 6.0;
             }
             if (key == WB_KEYBOARD_LEFT) {
-                left_speed -= 1.5;  // Reduce left, increase right to turn
-                right_speed += 1.5;
+                left_speed -= 6.0;  // Reduce left, increase right to turn
+                right_speed += 6.0;
             }
             if (key == WB_KEYBOARD_RIGHT) {
-                left_speed += 1.5;
-                right_speed -= 1.5;
+                left_speed += 6.0;
+                right_speed -= 6.0;
             }
 
             // Zoom in/out

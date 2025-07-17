@@ -4,13 +4,16 @@ simulationViewPerspectives: 000000ff00000001000000020000026700000338010000000201
 sceneTreePerspectives: 000000ff00000001000000030000002200000236000000fa0100000002010000000200
 maximizedDockId: -1
 centralWidgetVisible: 1
+projectionMode: PERSPECTIVE
+renderingMode: PLAIN
 orthographicViewHeight: 1
 textFiles: -1
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
-renderingDevicePerspectives: big emergency robot(1):camera_front;1;0.439063;0;0
-renderingDevicePerspectives: big emergency robot(2):camera_front;1;0.428125;0;0
-renderingDevicePerspectives: big emergency robot(3):camera_front;1;0.396875;0;0
+renderingDevicePerspectives: big emergency robot(1):camera_front;1;0.5;0;0
+renderingDevicePerspectives: big emergency robot(1):rotating_camera;1;0.5125;0.00153492;0
+renderingDevicePerspectives: big emergency robot(2):camera_front;1;0.492188;0;0
+renderingDevicePerspectives: big emergency robot(3):camera_front;1;0.404688;0;0
 renderingDevicePerspectives: big emergency robot:camera_front;0;0.359304;0.085188;0.463068
 renderingDevicePerspectives: big robot (1):camera_front;0;0.671875;0;0
 renderingDevicePerspectives: big robot (2):camera;1;1;0;0
