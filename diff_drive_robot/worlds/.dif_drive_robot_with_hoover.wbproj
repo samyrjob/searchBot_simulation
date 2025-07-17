@@ -1,6 +1,6 @@
 Webots Project File version R2025a
-perspectives: 000000ff00000000fd0000000200000001000003c000000322fc0200000001fb0000001400540065007800740045006400690074006f00720000000019000003220000004000ffffff00000003000007800000013bfc0100000001fc00000000000007800000006900fffffffa000000000100000002fb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c0100000000ffffffff0000006900fffffffb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c0100000000ffffffff000000000000000000000780000002b000000001000000020000000100000008fc00000000
-simulationViewPerspectives: 000000ff000000010000000200000267000003380100000002010000000100
+perspectives: 000000ff00000000fd0000000200000001000003c000000322fc0200000001fb0000001400540065007800740045006400690074006f00720000000019000003220000004000ffffff00000003000007800000013bfc0100000002fc00000000000007800000000000fffffffa000000000100000001fb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c0100000000ffffffff0000000000000000fb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c0100000000000007800000006900ffffff00000780000002b000000001000000020000000100000008fc00000000
+simulationViewPerspectives: 000000ff000000010000000200000266000005180100000002010000000100
 sceneTreePerspectives: 000000ff00000001000000030000002200000236000000fa0100000002010000000200
 maximizedDockId: -1
 centralWidgetVisible: 1
@@ -10,10 +10,12 @@ orthographicViewHeight: 1
 textFiles: -1
 globalOptionalRendering: DistanceSensorRays
 consoles: Console:All:All
-renderingDevicePerspectives: big emergency robot(1):camera_front;1;0.5;0;0
-renderingDevicePerspectives: big emergency robot(1):rotating_camera;1;0.5125;0.00153492;0
-renderingDevicePerspectives: big emergency robot(2):camera_front;1;0.492188;0;0
-renderingDevicePerspectives: big emergency robot(3):camera_front;1;0.404688;0;0
+renderingDevicePerspectives: big emergency robot(1):camera_front;1;0.489063;0;0
+renderingDevicePerspectives: big emergency robot(1):rotating_camera;1;0.334734;0;0.499467
+renderingDevicePerspectives: big emergency robot(2):camera_front;1;0.229411;0;0.655502
+renderingDevicePerspectives: big emergency robot(2):rotating_camera;1;0.398438;0;0.271132
+renderingDevicePerspectives: big emergency robot(3):camera_front;1;0.407813;0.0191864;0
+renderingDevicePerspectives: big emergency robot(3):rotating_camera;1;0.2375;0.0736761;0.0781499
 renderingDevicePerspectives: big emergency robot:camera_front;0;0.359304;0.085188;0.463068
 renderingDevicePerspectives: big robot (1):camera_front;0;0.671875;0;0
 renderingDevicePerspectives: big robot (2):camera;1;1;0;0
@@ -21,5 +23,6 @@ renderingDevicePerspectives: big robot (2):camera_front;1;0.30625;0;0
 renderingDevicePerspectives: big robot :camera_front;1;0.30625;0;0
 renderingDevicePerspectives: big robot emergency 2:camera_front;0;0.671875;0;0
 renderingDevicePerspectives: big robot emergency:camera_front;0;0.30625;0;0
+renderingDevicePerspectives: big secours tah secours:camera_front;1;0.426563;0;0
 renderingDevicePerspectives: big true robot:camera_front;1;0.442188;0;0
 renderingDevicePerspectives: robot:camera;0;0.129167;0;0
