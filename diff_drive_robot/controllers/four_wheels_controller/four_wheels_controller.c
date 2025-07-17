@@ -1,15 +1,3 @@
-/*
- * File:          four_wheels_controller.c
- * Date:
- * Description:
- * Author:
- * Modifications:
- */
-
-/*
- * You may need to add include files like <webots/distance_sensor.h> or
- * <webots/motor.h>, etc.
- */
 #include <webots/robot.h>
 #include <webots/camera.h>
 #include <webots/distance_sensor.h>
@@ -17,9 +5,10 @@
 #include <webots/supervisor.h>
 #include <webots/speaker.h>
 #include <stdbool.h>
+#include <webots/radar.h>
 
 /*
- * You may want to add macros here.
+ macros here.
  */
 #define TIME_STEP 64
 #define FOV_STEP 0.01
@@ -27,17 +16,13 @@
 #define PLAY_INTERVAL 10000  // 10 seconds in milliseconds
 
 
- // motor wheels
+// motor wheels
 static WbDeviceTag wheels[4];
 
-/*
- * This is the main program.
- * The arguments of the main function can be specified by the
- * "controllerArgs" field of the Robot node
- */
 
 
- // Convert axis-angle to quaternion
+
+// Convert axis-angle to quaternion
 void axis_angle_to_quat(double axis[3], double angle, double q[4]) {
     double half = angle / 2.0;
     double sin_half = sin(half);
@@ -76,7 +61,7 @@ void quat_to_axis_angle(double q[4], double axis_angle[4]) {
 
 
 
-
+// set speed to wheels
 void set_wheel_speeds(double left, double right) {
     wb_motor_set_position(wheels[0], INFINITY); // rear_right
     wb_motor_set_position(wheels[1], INFINITY); // rear_left
@@ -88,6 +73,8 @@ void set_wheel_speeds(double left, double right) {
     wb_motor_set_velocity(wheels[2], right);
     wb_motor_set_velocity(wheels[3], left);
 }
+
+
 
 
 
@@ -140,12 +127,13 @@ int main(int argc, char** argv) {
     else {
         printf("Camera found!\n");
         wb_camera_enable(camera, TIME_STEP);
+        // Enable camera recognition
+        wb_camera_recognition_enable(camera, TIME_STEP);
     }
 
 
 
-    // Enable camera recognition
-    wb_camera_recognition_enable(camera, TIME_STEP);
+  
 
     //enable the keyboard 
     wb_keyboard_enable(TIME_STEP);
@@ -159,10 +147,39 @@ int main(int argc, char** argv) {
     // get rotational camera
     WbDeviceTag cam_motor = wb_robot_get_device("camera_motor");
     WbDeviceTag rotating_camera = wb_robot_get_device("rotating_camera");
-    wb_camera_enable(rotating_camera, TIME_STEP);
+   
+
+
+
+
+    // enable the camera
+    if (rotating_camera == 0) {
+        printf("rotating Camera not found!\n");
+        return -1;
+    }
+    else {
+        printf("Rotating camera found!\n");
+        wb_camera_enable(rotating_camera, TIME_STEP);
+        // Enable camera recognition
+        wb_camera_recognition_enable(rotating_camera, TIME_STEP);
+    }
+
+
+    // set position of the camera_motor
+    wb_motor_set_position(cam_motor, INFINITY);
 
     // Rotate continuously
-    wb_motor_set_velocity(cam_motor, 1.0);
+    wb_motor_set_velocity(cam_motor, 0.5);
+
+
+    // get and enable the radar 
+    WbDeviceTag radar = wb_robot_get_device("radar"); 
+    if (radar == 0) {
+        printf("Radar device not found!\n");
+        return -1;
+    }
+    wb_radar_enable(radar, TIME_STEP);
+
 
 
 
@@ -175,13 +192,36 @@ int main(int argc, char** argv) {
     while (wb_robot_step(TIME_STEP) != -1) {
 
 
+
+        if (wb_camera_get_image(camera) == NULL) {
+            printf("Main camera failed during runtime. Switching to backup.\n");
+            // Stop rotation of backup camera to act like a fixed one
+            wb_motor_set_position(cam_motor, -0.5);  // Stop rotating
+            wb_motor_set_velocity(cam_motor, 0.0);
+        }
+
+
+
+
+
+
+
+        int target_count = wb_radar_get_number_of_targets(radar);
+        const WbRadarTarget* targets = wb_radar_get_targets(radar);
+
+        printf("Detected %d targets\n", target_count);
+
+        for (int i = 0; i < target_count; i++) {
+            printf("Target %d: distance = %f, azimuth = %f, speed = %f, power = %f\n",
+                i, targets[i].distance, targets[i].azimuth, targets[i].speed, targets[i].received_power);
+        }
+
+
+
   
 
 
 
-        const unsigned char* image = wb_camera_get_image(camera);
-        int width = wb_camera_get_width(camera);
-        int height = wb_camera_get_height(camera);
 
   
 
@@ -229,6 +269,8 @@ int main(int argc, char** argv) {
                 left_speed += 6.0;
                 right_speed -= 6.0;
             }
+
+         
 
             // Zoom in/out
             if (key == 'Z' || key == 'z') {
@@ -320,7 +362,7 @@ int main(int argc, char** argv) {
              int object_id = objects[i].id;
              WbNodeRef object_node = wb_supervisor_node_get_from_id(object_id);
              const char* model = objects[i].model;
-             printf("Detected object type (model): %s\n", model);
+             //printf("Detected object type (model): %s\n", model);
 
              if (object_node) {
                  WbFieldRef name_field = wb_supervisor_node_get_field(object_node, "name");
@@ -328,7 +370,7 @@ int main(int argc, char** argv) {
                  if (name_field) {
                      const char* name = wb_supervisor_field_get_sf_string(name_field);
                      if (name)
-                         printf("Detected object with name: %s\n", name);
+                        // printf("Detected object with name: %s\n", name);
                      if (strcmp(name, "missing_person") == 0) {
                          sound_path = "reassure_message_searchbot.wav";
 
@@ -339,8 +381,8 @@ int main(int argc, char** argv) {
 
 
                 const double* position = wb_supervisor_node_get_position(object_node);
-                printf("Object %d world coordinates: x=%.2f, y=%.2f, z=%.2f\n",
-                    object_id, position[0], position[1], position[2]);
+               // printf("Object %d world coordinates: x=%.2f, y=%.2f, z=%.2f\n",
+                //    object_id, position[0], position[1], position[2]);
              }
          }
 
