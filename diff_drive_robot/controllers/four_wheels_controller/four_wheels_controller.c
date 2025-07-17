@@ -320,6 +320,12 @@ int main(int argc, char** argv) {
                      const char* name = wb_supervisor_field_get_sf_string(name_field);
                      if (name)
                          printf("Detected object with name: %s\n", name);
+                     if (strcmp(name, "missing_person") == 0) {
+                         sound_path = "reassure_message_searchbot.wav";
+
+                         }
+
+
                  }
 
 
