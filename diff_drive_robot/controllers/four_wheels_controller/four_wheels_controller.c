@@ -21,8 +21,10 @@
 // motor wheels
 static WbDeviceTag wheels[4];
 
-// front-left and front-right steering
-//static WbDeviceTag steer[2];
+
+// for Ackerman:
+static WbDeviceTag steering[2];
+static int has_steering = 0;
 
 
 
@@ -81,6 +83,34 @@ void set_wheel_speeds(double left, double right) {
 
 
 
+void process_camera_recognition(WbDeviceTag camera, char* sound_path) {
+    int count = wb_camera_recognition_get_number_of_objects(camera);
+    const WbCameraRecognitionObject* objects = wb_camera_recognition_get_objects(camera);
+
+    for (int i = 0; i < count; ++i) {
+        int object_id = objects[i].id;
+        WbNodeRef object_node = wb_supervisor_node_get_from_id(object_id);
+        const char* model = objects[i].model;
+
+        if (object_node) {
+            WbFieldRef name_field = wb_supervisor_node_get_field(object_node, "name");
+
+            if (name_field) {
+                const char* name = wb_supervisor_field_get_sf_string(name_field);
+                if (name && strcmp(name, "missing_person") == 0) {
+                    sound_path = "reassure_message_searchbot.wav";
+                }
+            }
+
+            const double* position = wb_supervisor_node_get_position(object_node);
+            printf("Object %d world coordinates: x=%.2f, y=%.2f, z=%.2f\n",
+                object_id, position[0], position[1], position[2]);
+        }
+    }
+}
+
+
+
 
 
    
@@ -105,13 +135,15 @@ int main(int argc, char** argv) {
 
 
 
-    //// all steers
-    //steer[0] = wb_robot_get_device("front_left_steer");
-    //steer[1] = wb_robot_get_device("front_right_steer");
+    // only for Ackerman
+    if (strcmp(wb_robot_get_name(), "ackerman") == 0) {
+        has_steering = 1;
+        steering[0] = wb_robot_get_device("front_left_steer");
+        steering[1] = wb_robot_get_device("front_right_steer");
+    }
 
-    //// Set position control (not velocity)
-    //wb_motor_set_position(steer[0], 0.0);
-    //wb_motor_set_position(steer[1], 0.0);
+    if (!steering[0]) printf("front_left_steer not found!\n");
+    if (!steering[1]) printf("front_right_steer not found!\n");
 
 
     //double steering_angle = 0.0;  // range: -0.5 (left) to 0.5 (right)
@@ -202,12 +234,12 @@ int main(int argc, char** argv) {
 
 
 
-    /* main loop
-     * Perform simulation steps of TIME_STEP milliseconds
-     * and leave the loop when the simulation is over
-     */
-    while (wb_robot_step(TIME_STEP) != -1) {
+    // main loop
 
+    double time = 0.0;
+    
+    while (wb_robot_step(TIME_STEP) != -1) {
+        time += TIME_STEP / 1000.0;
 
 
         if (wb_camera_get_image(camera) == NULL) {
@@ -226,12 +258,12 @@ int main(int argc, char** argv) {
         int target_count = wb_radar_get_number_of_targets(radar);
         const WbRadarTarget* targets = wb_radar_get_targets(radar);
 
-        //printf("Detected %d targets\n", target_count);
+      /*  printf("Detected %d targets\n", target_count);*/
 
-  /*      for (int i = 0; i < target_count; i++) {
+        for (int i = 0; i < target_count; i++) {
             printf("Target %d: distance = %f, azimuth = %f, speed = %f, power = %f\n",
                 i, targets[i].distance, targets[i].azimuth, targets[i].speed, targets[i].received_power);
-        }*/
+        }
 
 
 
@@ -244,6 +276,10 @@ int main(int argc, char** argv) {
         //// Default: stop
         double left_speed = 0.0;
         double right_speed = 0.0;
+
+
+        // dir for steering
+        double dir = 0.0;
 
         // Collect all pressed keys
         int key;
@@ -270,31 +306,43 @@ int main(int argc, char** argv) {
 
       
             if (key == WB_KEYBOARD_UP) {
-           /*     left_speed += 6.0;
-                right_speed += 6.0;*/
+          
                 left_speed = 6.0;
                 right_speed = 6.0;
             }
             if (key == WB_KEYBOARD_DOWN) {
-            /*    left_speed -= 6.0;
-                right_speed -= 6.0;*/
+         
                 left_speed = - 6.0;
                 right_speed = - 6.0;
             }
-            if (key == WB_KEYBOARD_LEFT) {
-                //left_speed -= 3.0;  // Reduce left, increase right to turn
-                //right_speed += 3.0;
 
-                left_speed = - 3.0;  
-                right_speed = 3.0;
-            }
-            if (key == WB_KEYBOARD_RIGHT) {
-      /*          left_speed += 3.0;
-                right_speed -= 3.0;*/
+            // only for Ackerman
+            if (has_steering) {
+                /*double dir = 0.5 * sin(time);
+                wb_motor_set_position(steering[0], dir);
+                wb_motor_set_position(steering[1], dir);*/
 
-                left_speed = 3.0;
-                right_speed = -3.0;
+
+
+
+
+                if (key == WB_KEYBOARD_RIGHT) {
+                    dir = 0.5; // turn right
+                }
+                else if (key == WB_KEYBOARD_LEFT) {
+                    dir = -0.5; // turn left
+                }
+                else {
+                    dir = 0.0; // straight
+                }
+
+
+
             }
+
+
+
+
 
 
 
@@ -360,14 +408,17 @@ int main(int argc, char** argv) {
         }
 
 
+
+        // apply steering
+
+        wb_motor_set_position(steering[0], dir);
+        wb_motor_set_position(steering[1], dir);
     
         // Apply final speed
         set_wheel_speeds(left_speed, right_speed);
 
 
 
-        //wb_motor_set_position(steer[0], steering_angle);
-        //wb_motor_set_position(steer[1], steering_angle);
 
 
         // apply sound settings
@@ -388,48 +439,11 @@ int main(int argc, char** argv) {
         }
 
 
-       
 
 
+        process_camera_recognition(camera, sound_path);
+        process_camera_recognition(rotating_camera, sound_path);
 
-        // Then: roll rotation
-        // NOTE: This will override the above unless we compose both (see next)
-        
-        // ❗Only one rotation can be set like this — for full combo, we need quaternion math
-
-
-
-
-         int count = wb_camera_recognition_get_number_of_objects(camera);
-         const WbCameraRecognitionObject* objects = wb_camera_recognition_get_objects(camera);
-
-         for (int i = 0; i < count; ++i) {
-             int object_id = objects[i].id;
-             WbNodeRef object_node = wb_supervisor_node_get_from_id(object_id);
-             const char* model = objects[i].model;
-             //printf("Detected object type (model): %s\n", model);
-
-             if (object_node) {
-                 WbFieldRef name_field = wb_supervisor_node_get_field(object_node, "name");
-
-                 if (name_field) {
-                     const char* name = wb_supervisor_field_get_sf_string(name_field);
-                     if (name)
-                        // printf("Detected object with name: %s\n", name);
-                     if (strcmp(name, "missing_person") == 0) {
-                         sound_path = "reassure_message_searchbot.wav";
-
-                         }
-
-
-                 }
-
-
-                const double* position = wb_supervisor_node_get_position(object_node);
-               // printf("Object %d world coordinates: x=%.2f, y=%.2f, z=%.2f\n",
-                //    object_id, position[0], position[1], position[2]);
-             }
-         }
 
 
             

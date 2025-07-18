@@ -3,7 +3,6 @@
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/samples/curriculum/protos/Obstacle.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/SandyGround.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/PalmTree.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Fox.proto"
@@ -31,8 +30,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.2072763847183906 -0.09609401714663528 0.9735514574005298 3.9895445013047275
-  position 2.504558661410512 3.1312174586187087 3.124062263264986
+  orientation 0.4545341133851671 0.17405497866094619 -0.8735580141996852 2.4959644500859417
+  position 1.6713595631181584 0.8131130079762465 4.9914130709959235
 }
 TexturedBackground {
 }
@@ -267,31 +266,8 @@ DEF Main_Robot Robot {
   ]
   supervisor TRUE
 }
-Obstacle {
-  translation -0.277372 0.0453209 0.025
-}
-Obstacle {
-  translation -0.239967 0.334318 0.025
-  name "obstacle(4)"
-}
-Obstacle {
-  translation 0.174911 0.368728 0.025
-  name "obstacle(5)"
-}
-Obstacle {
-  translation -0.34003 -0.116466 0.025
-  name "obstacle(3)"
-}
-Obstacle {
-  translation -0.430885 0.075342 0.025
-  name "obstacle(2)"
-}
-Obstacle {
-  translation -0.387896 0.196157 0.025
-  name "obstacle(1)"
-}
 DEF ACKERMAN Robot {
-  translation -0.6308738403174843 -1.277235549630847 0.1955066548586774
+  translation -0.637859 -1.29393 0.195507
   rotation 0.299856740993127 0.9539658308449253 0.005926926803350981 -3.1367617484794272
   children [
     Speaker {
@@ -329,8 +305,8 @@ DEF ACKERMAN Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.00021233776503622648 0.1298363503176707 -0.499919539763777
-                    rotation -0.9915219514997614 -0.12993929222011102 -5.6072774738558484e-06 3.1415947680326424
+                    translation 0.00021233776503623805 0.1298363503176707 -0.499919539763777
+                    rotation -0.9915219514997614 -0.12993929222011102 -5.607277473826999e-06 3.1415947680326424
                     children [
                       DEF COVER_TOP Shape {
                         appearance PBRAppearance {
@@ -603,6 +579,7 @@ DEF ACKERMAN Robot {
                   ]
                   endPoint Solid {
                     translation -0.22 -0.22 0
+                    rotation 0.9514824763846802 -0.30770225115800603 0.0006494345016895747 0.0001289907276924463
                     children [
                       DEF FRONT_LEFT_WHEEL HingeJoint {
                         jointParameters HingeJointParameters {
@@ -611,16 +588,18 @@ DEF ACKERMAN Robot {
                         device [
                           RotationalMotor {
                             name "front_left_wheel"
+                            maxTorque 50
                           }
                         ]
                         endPoint Solid {
-                          rotation -1 0 0 0
+                          translation 2.4823622397696088e-05 0.00014318515959909584 -0.0002961443440404988
+                          rotation 0.08692472111314625 -0.6811537335263158 -0.7269619550998268 2.4201045579304634e-05
                           children [
                             DEF WHEEL_ROT Pose {
                               translation -0.08 0 0
                               rotation 0 -1 0 1.57
                               children [
-                                Shape {
+                                DEF FRONT_LEFT_WHEEL Shape {
                                   appearance PBRAppearance {
                                   }
                                   geometry Cylinder {
@@ -631,6 +610,7 @@ DEF ACKERMAN Robot {
                               ]
                             }
                           ]
+                          contactMaterial ""
                           boundingObject USE WHEEL_ROT
                           physics Physics {
                           }
@@ -674,10 +654,12 @@ DEF ACKERMAN Robot {
                         device [
                           RotationalMotor {
                             name "front_right_wheel"
+                            maxTorque 50
                           }
                         ]
                         endPoint Solid {
-                          rotation -1 0 0 0
+                          translation -4.479343244666137e-06 -3.209957575111459e-05 -0.0001636465585576451
+                          rotation 0 -0.7071067811865476 -0.7071067811865476 0
                           children [
                             DEF WHEEL_ROT_RIGHT Pose {
                               translation 0.08 0 0
@@ -694,6 +676,7 @@ DEF ACKERMAN Robot {
                               ]
                             }
                           ]
+                          contactMaterial ""
                           boundingObject USE WHEEL_ROT_RIGHT
                           physics Physics {
                           }
@@ -815,7 +798,7 @@ DEF ACKERMAN Robot {
                   ]
                   endPoint Solid {
                     translation -0.21998712216259886 0.2199735423932179 8.394149806523706e-05
-                    rotation 0.9999925864487103 -0.0035838034010419223 -0.0014083326316335788 4.910002644209562
+                    rotation 0.9999925864487103 -0.0035838034010418243 -0.0014083326316335378 4.910002644209562
                     children [
                       DEF WHEEL_ROT_REAR_LEFT Pose {
                         translation -0.08 0 0
@@ -1102,9 +1085,9 @@ Solid {
   name "dog"
 }
 CardboardBox {
-  translation 23.7554 14.6826 2.3
-  rotation 0 0 -1 1.98313
-  size 0.6 1.5 0.8
+  translation -1.43807 -2.72878 1.77636e-15
+  rotation 0 0 -1 2.07476
+  size 0.6 1.5 1
 }
 Solid {
   translation 20.8 16 2.7
