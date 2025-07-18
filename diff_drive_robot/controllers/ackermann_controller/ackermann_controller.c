@@ -73,7 +73,6 @@ int main(int argc, char **argv) {
   wheels[3] = wb_robot_get_device("front_left_wheel");
 
 
-  set_wheel_speeds(3.0, 3.0);
 
 
   // only for Ackerman
@@ -107,32 +106,68 @@ int main(int argc, char **argv) {
   while (wb_robot_step(TIME_STEP) != -1) {
       time += TIME_STEP / 1000.0;
 
-      // only for Ackerman
-      if (has_steering) {
+
+      //// Default: stop
+      double left_speed = 0.0;
+      double right_speed = 0.0;
+
+
+      // default dir
+
+      double dir = 0.0;
+
+      // Collect all pressed keys
+      int key;
+      while ((key = wb_keyboard_get_key()) != -1) {
+      
+
+
+          if (key == WB_KEYBOARD_UP) {
+              /*     left_speed += 6.0;
+                   right_speed += 6.0;*/
+              left_speed = 6.0;
+              right_speed = 6.0;
+          }
+          if (key == WB_KEYBOARD_DOWN) {
+              /*    left_speed -= 6.0;
+                  right_speed -= 6.0;*/
+              left_speed = -6.0;
+              right_speed = -6.0;
+          }
+
+          // only for Ackerman
+          if (has_steering) {
               /*double dir = 0.5 * sin(time);
               wb_motor_set_position(steering[0], dir);
               wb_motor_set_position(steering[1], dir);*/
 
 
-          int key = wb_keyboard_get_key();
-          double dir = 0.0;
 
-          if (key == WB_KEYBOARD_RIGHT) {
-              dir = 0.5; // turn right
+
+
+              if (key == WB_KEYBOARD_RIGHT) {
+                  dir = 0.5; // turn right
+              }
+              else if (key == WB_KEYBOARD_LEFT) {
+                  dir = -0.5; // turn left
+              }
+              else {
+                  dir = 0.0; // straight
+              }
+
+
+
           }
-          else if (key == WB_KEYBOARD_LEFT) {
-              dir = -0.5; // turn left
-          }
-          else {
-              dir = 0.0; // straight
-          }
+
 
       
-          wb_motor_set_position(steering[0], dir);
-          wb_motor_set_position(steering[1], dir);
-
+      
       }
 
+
+        wb_motor_set_position(steering[0], dir);
+        wb_motor_set_position(steering[1], dir);
+        set_wheel_speeds(left_speed, right_speed);
   };
 
   /* Enter your cleanup code here */
