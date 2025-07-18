@@ -14,11 +14,12 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.3520
       C:\Program Files\Webots\include\controller\c\webots\types.h(57,9):
       see previous definition of 'true'
   
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(71,5): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(76,5): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(73,5): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(78,5): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(444,44): warning C4090: 'function': different 'const' qualifiers
+C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.c(445,53): warning C4090: 'function': different 'const' qualifiers
   Generating code
-  1 of 8 functions (12.5%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 9 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   four_wheels_controller.vcxproj -> C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\four_wheels_controller\four_wheels_controller.exe
