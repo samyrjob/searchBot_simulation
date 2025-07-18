@@ -8,16 +8,21 @@
 #include <webots/radar.h>
 
 /*
- macros here.
+ macros here.s
  */
 #define TIME_STEP 64
 #define FOV_STEP 0.01
 #define ANGLE_STEP 0.05
 #define PLAY_INTERVAL 10000  // 10 seconds in milliseconds
+//#define MAX_STEERING_ANGLE 0.5
+//#define STEERING_STEP 0.05
 
 
 // motor wheels
 static WbDeviceTag wheels[4];
+
+// front-left and front-right steering
+//static WbDeviceTag steer[2];
 
 
 
@@ -90,7 +95,7 @@ int main(int argc, char** argv) {
     WbDeviceTag speaker = wb_robot_get_device("speaker");
     printf("Speaker tag: %d\n", speaker);
 
-     // all vehicles
+    // all vehicles
     wheels[0] = wb_robot_get_device("rear_right_wheel");
     wheels[1] = wb_robot_get_device("rear_left_wheel");
     wheels[2] = wb_robot_get_device("front_right_wheel");
@@ -98,6 +103,18 @@ int main(int argc, char** argv) {
 
 
 
+
+
+    //// all steers
+    //steer[0] = wb_robot_get_device("front_left_steer");
+    //steer[1] = wb_robot_get_device("front_right_steer");
+
+    //// Set position control (not velocity)
+    //wb_motor_set_position(steer[0], 0.0);
+    //wb_motor_set_position(steer[1], 0.0);
+
+
+    //double steering_angle = 0.0;  // range: -0.5 (left) to 0.5 (right)
 
 
 
@@ -209,12 +226,12 @@ int main(int argc, char** argv) {
         int target_count = wb_radar_get_number_of_targets(radar);
         const WbRadarTarget* targets = wb_radar_get_targets(radar);
 
-        printf("Detected %d targets\n", target_count);
+        //printf("Detected %d targets\n", target_count);
 
-        for (int i = 0; i < target_count; i++) {
+  /*      for (int i = 0; i < target_count; i++) {
             printf("Target %d: distance = %f, azimuth = %f, speed = %f, power = %f\n",
                 i, targets[i].distance, targets[i].azimuth, targets[i].speed, targets[i].received_power);
-        }
+        }*/
 
 
 
@@ -223,9 +240,8 @@ int main(int argc, char** argv) {
 
 
 
-  
 
-        // Default: stop
+        //// Default: stop
         double left_speed = 0.0;
         double right_speed = 0.0;
 
@@ -254,21 +270,40 @@ int main(int argc, char** argv) {
 
       
             if (key == WB_KEYBOARD_UP) {
-                left_speed += 6.0;
-                right_speed += 6.0;
+           /*     left_speed += 6.0;
+                right_speed += 6.0;*/
+                left_speed = 6.0;
+                right_speed = 6.0;
             }
             if (key == WB_KEYBOARD_DOWN) {
-                left_speed -= 6.0;
-                right_speed -= 6.0;
+            /*    left_speed -= 6.0;
+                right_speed -= 6.0;*/
+                left_speed = - 6.0;
+                right_speed = - 6.0;
             }
             if (key == WB_KEYBOARD_LEFT) {
-                left_speed -= 6.0;  // Reduce left, increase right to turn
-                right_speed += 6.0;
+                //left_speed -= 3.0;  // Reduce left, increase right to turn
+                //right_speed += 3.0;
+
+                left_speed = - 3.0;  
+                right_speed = 3.0;
             }
             if (key == WB_KEYBOARD_RIGHT) {
-                left_speed += 6.0;
-                right_speed -= 6.0;
+      /*          left_speed += 3.0;
+                right_speed -= 3.0;*/
+
+                left_speed = 3.0;
+                right_speed = -3.0;
             }
+
+
+
+
+
+
+    
+
+        
 
          
 
@@ -319,10 +354,20 @@ int main(int argc, char** argv) {
 
             // Apply combined rotation to Webots object
             wb_supervisor_field_set_sf_rotation(rotation_field, final_rot);
+
+
+
         }
 
+
+    
         // Apply final speed
         set_wheel_speeds(left_speed, right_speed);
+
+
+
+        //wb_motor_set_position(steer[0], steering_angle);
+        //wb_motor_set_position(steer[1], steering_angle);
 
 
         // apply sound settings
