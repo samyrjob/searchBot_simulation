@@ -15,8 +15,8 @@ consoles: Console:All:All
 consoles: Console:All:All
 renderingDevicePerspectives: ackerman(1):camera_front;1;0.439486;0;0.34428
 renderingDevicePerspectives: ackerman(1):rotating_camera;1;0.50625;0;0
-renderingDevicePerspectives: ackerman:camera_front;1;0.4;0;0.0432766
-renderingDevicePerspectives: ackerman:rotating_camera;1;0.32655;0;0.511592
+renderingDevicePerspectives: ackerman:camera_front;1;0.40625;0;0
+renderingDevicePerspectives: ackerman:rotating_camera;1;0.281413;0;0.394127
 renderingDevicePerspectives: big emergency robot(1):camera_front;0;0.446875;0;0
 renderingDevicePerspectives: big emergency robot(1):rotating_camera;0;0.366133;0.011503;0
 renderingDevicePerspectives: big emergency robot(2):camera_front;1;0.351563;0;0.00318917

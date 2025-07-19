@@ -11,6 +11,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/drinks/protos/WaterBottle.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/fruits/protos/Apple.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Dog.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/CardboardBox.proto"
 
 WorldInfo {
   contactProperties [
@@ -62,7 +63,7 @@ DEF OBSTACLE_GRID Solid {
   name "ground"
   boundingObject USE EG
 }
-DEF ACKERMAN Robot {
+DEF SEARCH_BOT Robot {
   translation 23 19 2.5
   rotation 0.299856740993127 0.9539658308449253 0.005926926803350981 -3.1367617484794272
   children [
@@ -101,8 +102,8 @@ DEF ACKERMAN Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.00021233776503623672 0.1298363503176707 -0.499919539763777
-                    rotation -0.9915219514997613 -0.129939292220111 -5.607277473829078e-06 3.1415947680326424
+                    translation 0.0002123377650362377 0.1298363503176707 -0.499919539763777
+                    rotation -0.9915219514997613 -0.129939292220111 -5.607277473824851e-06 3.1415947680326424
                     children [
                       DEF COVER_TOP Shape {
                         appearance PBRAppearance {
@@ -269,7 +270,7 @@ DEF ACKERMAN Robot {
                                 Camera {
                                   rotation 0.7071067811865476 -0.7071067811865476 0 3.14159
                                   name "camera_front"
-                                  fieldOfView 0.6100000000000004
+                                  fieldOfView 1.7
                                   width 640
                                   height 640
                                   far 20
@@ -548,7 +549,7 @@ DEF ACKERMAN Robot {
                   ]
                   endPoint Solid {
                     translation 0.22000202730928464 0.21737253200557635 0.009640095396804245
-                    rotation -0.9999531267587021 -0.0032027679038298933 -0.009137098185372604 5.695430717031984
+                    rotation -0.9999531267587021 -0.0032027679038298825 -0.009137098185372587 5.695430717031984
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -594,7 +595,7 @@ DEF ACKERMAN Robot {
                   ]
                   endPoint Solid {
                     translation -0.21998712216259886 0.2199735423932179 8.394149806523704e-05
-                    rotation 0.9999925864487103 -0.0035838034010417423 -0.0014083326316335035 4.910002644209562
+                    rotation 0.9999925864487103 -0.0035838034010417246 -0.001408332631633496 4.910002644209562
                     children [
                       DEF WHEEL_ROT_REAR_LEFT Pose {
                         translation -0.08 0 0
@@ -872,7 +873,7 @@ WaterBottle {
   rotation -0.6955656737998641 -0.6328899879850206 0.34005684310076956 1.566356452471716
   name "water bottle(1)"
 }
-Solid {
+DEF DOG Solid {
   translation 21.2706 17.6079 2.6
   children [
     Dog {
@@ -880,10 +881,11 @@ Solid {
   ]
   name "dog"
 }
-Solid {
+DEF MISSING_PERSON Solid {
   translation 20.8 16 2.7
   children [
     Pedestrian {
+      name "missing_person"
       shirtColor 0 0.666667 1
       pantsColor 0 0 0
       shoesColor 0 0 0
@@ -891,4 +893,7 @@ Solid {
     }
   ]
   name "missing_person"
+}
+CardboardBox {
+  size 1.7 0.6 0.4
 }

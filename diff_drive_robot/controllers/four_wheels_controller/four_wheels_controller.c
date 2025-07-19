@@ -1,4 +1,4 @@
-#include <webots/robot.h>
+﻿#include <webots/robot.h>
 #include <webots/camera.h>
 #include <webots/distance_sensor.h>
 #include <webots/keyboard.h>
@@ -103,8 +103,18 @@ void process_camera_recognition(WbDeviceTag camera, char* sound_path) {
             }
 
             const double* position = wb_supervisor_node_get_position(object_node);
-            printf("Object %d world coordinates: x=%.2f, y=%.2f, z=%.2f\n",
-                object_id, position[0], position[1], position[2]);
+
+           
+            
+            if ( camera == wb_robot_get_device("rotating_camera")) {
+                printf("Object detected by the ROTATING CAMERA !\n");
+                printf("Coordinates: x=%.2f, y=%.2f, z=%.2f\n",
+                    position[0], position[1], position[2]);
+            }
+            else {
+                printf("Object detected ! Coordinates: x=%.2f, y=%.2f, z=%.2f\n",
+                    position[0], position[1], position[2]);
+            }
         }
     }
 }
@@ -260,9 +270,20 @@ int main(int argc, char** argv) {
 
       /*  printf("Detected %d targets\n", target_count);*/
 
-        for (int i = 0; i < target_count; i++) {
+    /*    for (int i = 0; i < target_count; i++) {
             printf("Target %d: distance = %f, azimuth = %f, speed = %f, power = %f\n",
                 i, targets[i].distance, targets[i].azimuth, targets[i].speed, targets[i].received_power);
+        }*/
+
+
+        // more professional message :
+
+        if (target_count > 0) {
+            printf("[RADAR] %d potential object(s) detected. Sending coordinates to rescue team...\n", target_count);
+            for (int i = 0; i < target_count; i++) {
+                printf("[RADAR] Target %d → Estimated Distance: %.2f m | Azimuth: %.2f rad | Relative Speed: %.2f m/s | Signal Strength: %.2f\n",
+                    i + 1, targets[i].distance, targets[i].azimuth, targets[i].speed, targets[i].received_power);
+            }
         }
 
 
