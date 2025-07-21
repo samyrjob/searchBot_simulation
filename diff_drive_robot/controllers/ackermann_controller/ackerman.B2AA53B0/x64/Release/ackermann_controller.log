@@ -1,9 +1,0 @@
-﻿  ackermann_controller.c
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\ackermann_controller\ackermann_controller.c(41,5): warning C4013: 'wb_motor_set_position' undefined; assuming extern returning int
-C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\ackermann_controller\ackermann_controller.c(47,5): warning C4013: 'wb_motor_set_velocity' undefined; assuming extern returning int
-  Generating code
-  2 of 5 functions (40.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  ackermann_controller.vcxproj -> C:\Users\notre\SearchBot_Simulation\searchBot_simulation\diff_drive_robot\controllers\ackermann_controller\ackermann_controller.exe

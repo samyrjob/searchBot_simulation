@@ -2,7 +2,6 @@
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/SandyGround.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/PalmTree.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Fox.proto"
@@ -11,6 +10,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/drinks/protos/WaterBottle.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/fruits/protos/Apple.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/animals/protos/Dog.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/SolarCell.proto"
 
 WorldInfo {
   contactProperties [
@@ -21,7 +21,7 @@ WorldInfo {
       ]
     }
     ContactProperties {
-      material2 "wheel_front"
+      material2 "steer_front"
       coulombFriction [
         4
       ]
@@ -29,17 +29,14 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.21722272611997454 -0.08485886495624713 -0.9724264806633683 3.8676674568436846
-  position 28.66687757239956 13.585230230341054 5.759372042674369
+  orientation -0.09295192953847069 0.2377005302264845 0.9668807562078809 2.687538110532597
+  position 14.104425034666015 0.6907085735682785 4.1105433094405
+  follow "ackerman"
+  followType "Mounted Shot"
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
-}
-RectangleArena {
-  translation 0.648999 0.308802 -1.96509e-14
-  rotation 0 0 1 0.0327249000000051
-  floorSize 10 10
 }
 DEF OBSTACLE_GRID Solid {
   translation 1.52417 -0.637985 1.77636e-15
@@ -62,15 +59,51 @@ DEF OBSTACLE_GRID Solid {
   name "ground"
   boundingObject USE EG
 }
-DEF ACKERMAN Robot {
-  translation 23 19 2.5
-  rotation 0.299856740993127 0.9539658308449253 0.005926926803350981 -3.1367617484794272
+DEF SEARCH_BOT Robot {
+  translation 7.187279937417211 4.300424807499112 1.7996594543601812
+  rotation 0.6683022834688338 -0.7423508780044291 -0.04782501266487618 -3.042259459000047
   children [
+    DEF SOLAR_PANELS Pose {
+      children [
+        DEF solar_panel_rear Solid {
+          translation 0 0.24 -0.4
+          children [
+            Shape {
+              appearance SolarCell {
+              }
+              geometry Box {
+                size 0.4 0.02 0.1
+              }
+            }
+          ]
+        }
+      ]
+    }
+    Solid {
+      translation -0.09 0.03 -0.405
+      rotation 0 1 0 1.57
+      children [
+        DEF WINK Shape {
+          appearance Appearance {
+            material Material {
+            }
+          }
+          geometry Capsule {
+            height 0.04
+            radius 0.004
+          }
+        }
+      ]
+      name "dummy_sound_sensor"
+      boundingObject USE WINK
+      physics Physics {
+      }
+    }
     Speaker {
       translation 0.1 0.03 -0.41
       rotation 1 0 0 1.5707996938995747
       children [
-        Shape {
+        DEF SPEAKER Shape {
           appearance Appearance {
             material Material {
             }
@@ -81,6 +114,9 @@ DEF ACKERMAN Robot {
           }
         }
       ]
+      boundingObject USE SPEAKER
+      physics Physics {
+      }
     }
     DEF CHASSIS_AND_WHEELS Solid {
       children [
@@ -90,19 +126,19 @@ DEF ACKERMAN Robot {
               children [
                 HingeJoint {
                   jointParameters DEF ROTATION_JOINT HingeJointParameters {
-                    position 6.54380081236267
+                    position 55.246146639684625
                     axis 0 0 1
                     anchor 0 0.13 -0.5
                   }
                   device [
                     RotationalMotor {
-                      name "camera_motor"
+                      name "top_sensors_motor"
                       maxVelocity 2
                     }
                   ]
                   endPoint Solid {
-                    translation 0.00021233776503623672 0.1298363503176707 -0.499919539763777
-                    rotation -0.9915219514997613 -0.129939292220111 -5.607277473829078e-06 3.1415947680326424
+                    translation -0.00016201845464151838 0.12978641496929175 -0.499919539763777
+                    rotation -0.795320290985768 0.6061894379943004 -3.2354000548388967e-06 3.1416020539013396
                     children [
                       DEF COVER_TOP Shape {
                         appearance PBRAppearance {
@@ -199,6 +235,20 @@ DEF ACKERMAN Robot {
                       children [
                         Solid {
                           children [
+                            GPS {
+                              children [
+                                DEF GPS_SHAPE Shape {
+                                  appearance PBRAppearance {
+                                  }
+                                  geometry Box {
+                                    size 0.09 0.09 0.05
+                                  }
+                                }
+                              ]
+                              boundingObject USE GPS_SHAPE
+                              physics Physics {
+                              }
+                            }
                             DEF MIDDLE_DIAL Shape {
                               appearance PBRAppearance {
                               }
@@ -207,12 +257,16 @@ DEF ACKERMAN Robot {
                               }
                             }
                           ]
+                          name "top_rectangular_box"
+                          boundingObject USE MIDDLE_DIAL
+                          physics Physics {
+                          }
                         }
                       ]
                     }
-                    Shape {
+                    DEF TOP_JOINT_CONNECTOR Shape {
                       appearance PBRAppearance {
-                        baseColor 0.235294 0.235294 0.235294
+                        baseColor 1 1 0
                       }
                       geometry Box {
                         size 0.1 0.15 0.09
@@ -269,7 +323,7 @@ DEF ACKERMAN Robot {
                                 Camera {
                                   rotation 0.7071067811865476 -0.7071067811865476 0 3.14159
                                   name "camera_front"
-                                  fieldOfView 0.6100000000000004
+                                  fieldOfView 0.8699999999999992
                                   width 640
                                   height 640
                                   far 20
@@ -295,7 +349,7 @@ DEF ACKERMAN Robot {
                 Solid {
                   translation 0 0.01 -0.29
                   children [
-                    Shape {
+                    DEF BEARER_CAMERA Shape {
                       appearance PBRAppearance {
                       }
                       geometry Box {
@@ -304,6 +358,9 @@ DEF ACKERMAN Robot {
                     }
                   ]
                   name "bearer_camera"
+                  boundingObject USE BEARER_CAMERA
+                  physics Physics {
+                  }
                 }
               ]
             }
@@ -360,6 +417,7 @@ DEF ACKERMAN Robot {
                 }
                 DEF FRONT_LEFT_STEER HingeJoint {
                   jointParameters HingeJointParameters {
+                    position -0.002654846311715457
                     axis 0 0 1
                     anchor -0.22 -0.22 0
                   }
@@ -375,10 +433,11 @@ DEF ACKERMAN Robot {
                   ]
                   endPoint Solid {
                     translation -0.22 -0.22 0
-                    rotation 0.9514824763850506 -0.3077022511581258 0.0006494339022794775 0.00012899072424964677
+                    rotation 0 0 -1 0.002105043355078058
                     children [
                       DEF FRONT_LEFT_WHEEL HingeJoint {
                         jointParameters HingeJointParameters {
+                          position 32.65053500385054
                           axis -1 0 0
                         }
                         device [
@@ -388,8 +447,8 @@ DEF ACKERMAN Robot {
                           }
                         ]
                         endPoint Solid {
-                          translation 2.482362239769606e-05 0.0001431851595990957 -0.0002961443440404986
-                          rotation 0.08692472128535039 -0.6811537335160424 -0.7269619550888617 2.4201008879274866e-05
+                          translation 2.482362239769604e-05 -0.00023233045904186324 -0.00023286481107714284
+                          rotation 1 0 0 5.051862341887628
                           children [
                             DEF WHEEL_ROT Pose {
                               translation -0.08 0 0
@@ -406,7 +465,7 @@ DEF ACKERMAN Robot {
                               ]
                             }
                           ]
-                          contactMaterial ""
+                          contactMaterial "wheel_front"
                           boundingObject USE WHEEL_ROT
                           physics Physics {
                           }
@@ -414,19 +473,15 @@ DEF ACKERMAN Robot {
                       }
                     ]
                     name "solid(1)"
-                    contactMaterial "wheel_front"
+                    contactMaterial "steer_front"
                     physics Physics {
                       mass 3.5
-                      centerOfMass [
-                        0 0 0
-                      ]
-                      damping Damping {
-                      }
                     }
                   }
                 }
                 DEF FRONT_RIGHT_STEER HingeJoint {
                   jointParameters HingeJointParameters {
+                    position -0.007568579784813059
                     axis 0 0 1
                     anchor 0.22 -0.22 0
                   }
@@ -442,9 +497,11 @@ DEF ACKERMAN Robot {
                   ]
                   endPoint Solid {
                     translation 0.22 -0.22 0
+                    rotation 0 0 -1 0.007568579784839705
                     children [
                       DEF FRONT_RIGHT_WHEEL HingeJoint {
                         jointParameters HingeJointParameters {
+                          position 37.56513084890137
                           axis -1 0 0
                         }
                         device [
@@ -454,8 +511,8 @@ DEF ACKERMAN Robot {
                           }
                         ]
                         endPoint Solid {
-                          translation -4.479343244666132e-06 -3.209957575111459e-05 -0.00016364655855764505
-                          rotation -1 0 0 0
+                          translation -5.997752386832638e-05 5.6524514515348556e-05 -0.0004187592106929735
+                          rotation 1 0 0 0.13409310631824436
                           children [
                             DEF WHEEL_ROT_RIGHT Pose {
                               translation 0.08 0 0
@@ -472,21 +529,16 @@ DEF ACKERMAN Robot {
                               ]
                             }
                           ]
-                          contactMaterial ""
+                          contactMaterial "wheel_front"
                           boundingObject USE WHEEL_ROT_RIGHT
                           physics Physics {
                           }
                         }
                       }
                     ]
-                    contactMaterial "wheel_front"
+                    contactMaterial "steer_front"
                     physics Physics {
                       mass 3.5
-                      centerOfMass [
-                        0 0 0
-                      ]
-                      damping Damping {
-                      }
                     }
                   }
                 }
@@ -534,7 +586,7 @@ DEF ACKERMAN Robot {
                 }
                 DEF REAR_RIGHT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2665.3063853276954
+                    position 2683.344566808945
                     axis -1 0 0
                     anchor 0.22 0.22 0
                     dampingConstant 1.5
@@ -547,8 +599,8 @@ DEF ACKERMAN Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation 0.22000202730928464 0.21737253200557635 0.009640095396804245
-                    rotation -0.9999531267587021 -0.0032027679038298933 -0.009137098185372604 5.695430717031984
+                    translation 0.22001243909151214 0.2112069253620551 0.00477599350236098
+                    rotation -0.9999904864151514 0.00029605566365395225 -0.0043519455687048595 4.884072283104651
                     children [
                       DEF WHEEL_ROT Pose {
                         translation 0.08 0 0
@@ -580,7 +632,7 @@ DEF ACKERMAN Robot {
                 }
                 DEF REAR_LEFT_WHEEL HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 2684.9330646616468
+                    position 2704.37447804479
                     axis -1 0 0
                     anchor -0.22 0.22 0
                     dampingConstant 1.5
@@ -593,8 +645,8 @@ DEF ACKERMAN Robot {
                     }
                   ]
                   endPoint Solid {
-                    translation -0.21998712216259886 0.2199735423932179 8.394149806523704e-05
-                    rotation 0.9999925864487103 -0.0035838034010417423 -0.0014083326316335035 4.910002644209562
+                    translation -0.21998712216259886 0.2200248739337521 8.442432986864809e-05
+                    rotation -0.9999956953911567 0.002925106951344537 0.0002301053674123741 1.9650368296929919
                     children [
                       DEF WHEEL_ROT_REAR_LEFT Pose {
                         translation -0.08 0 0
@@ -635,7 +687,7 @@ DEF ACKERMAN Robot {
       physics Physics {
         mass 8
         centerOfMass [
-          0 -0.15 0.8
+          0 -0.15 1.6
         ]
       }
     }
@@ -691,20 +743,20 @@ Rock {
   name "rock(6)"
 }
 WaterBottle {
-  translation -12342.91882383031 -5662.635096470178 0.043373242270880484
-  rotation 0.7119030273995413 0.04857076603028898 -0.7005961463401 -2.882194572218626
+  translation -12342.91882383031 -5662.635096470183 -11272.206032197655
+  rotation 0.711903027408876 0.04857076643446049 -0.7005961463025947 -2.8821945714280726
 }
 Apple {
-  translation 29.15426179224637 24.27022948218306 1.9101981715293836
-  rotation -0.5597019483154132 0.8174504949120572 -0.1360456446196032 -2.296492593388102
+  translation 29.154260858548824 24.27022887545179 1.9101982942697024
+  rotation -0.5596746034566569 0.8174726999259406 -0.1360247151124634 -2.2965099241465956
 }
 Solid {
   translation 21.6007 16.522 4.199999999999999
   rotation 0 0 1 1.32209
   children [
     Solid {
-      translation -1.2614369463258868 1.1967648508901068 -0.5341934999716385
-      rotation -0.9351220280919017 0.07834375533690667 -0.34555614388547573 0.011572983080084536
+      translation -1.2651112778433848 1.1955228612012938 -0.6402352322952529
+      rotation -0.9532954945974149 0.021128154104181986 -0.30129935460339136 0.015777269331766607
       children [
         DEF LEFT_SIDE_CAVE Shape {
           appearance PBRAppearance {
@@ -726,8 +778,8 @@ Solid {
       }
     }
     Solid {
-      translation 1.2740857094877747 1.1976273770478514 -0.5695573027178393
-      rotation -0.5395980793389599 -0.8171918819166512 0.20256194337344705 0.018159333468065586
+      translation 1.2781015346223015 1.196175882420313 -0.6717961224527351
+      rotation -0.7192584744318831 -0.6491093164242658 0.24763752197343336 0.020177978138707007
       children [
         DEF RIGHT_SIDE_CAVE Shape {
           appearance PBRAppearance {
@@ -749,8 +801,8 @@ Solid {
       }
     }
     Solid {
-      translation -0.0002813594223098903 0.49989671570082095 -1.767191201178159
-      rotation -0.5271504302423937 0.8495082510802725 -0.021169677413604544 0.004500791518731218
+      translation -0.0003963835802807125 0.4990373216431898 -1.8816707653934057
+      rotation -0.8233899312837746 0.564930559986053 0.05368876469379238 0.006518918521575672
       children [
         DEF BOTTOM_CAVE Shape {
           appearance PBRAppearance {
@@ -772,8 +824,8 @@ Solid {
       }
     }
     Solid {
-      translation -4.922659900330473e-05 0.20024436437621063 -2.06512316203587
-      rotation -0.26197637409657076 0.9641387605717058 0.04248328822570491 0.0020474936934647475
+      translation -8.159319689227118e-05 0.20046376095559637 -2.1775484622397157
+      rotation -0.4234405496239841 0.9047203296349328 0.046682181604941746 0.002503588600703114
       children [
         DEF BOTTOM_CAVE_1 Shape {
           appearance PBRAppearance {
@@ -795,8 +847,8 @@ Solid {
       }
     }
     Solid {
-      translation 0.00039354264880131495 1.081306856998637 -0.32588947715785066
-      rotation 0.8440600100191992 0.5288205942774098 0.08894649264853881 0.0029521024283371044
+      translation 0.0003502030019291169 1.0860089536362416 -0.3854381803195479
+      rotation 0.8426935276536713 0.5382940652808473 0.010349769757342678 0.003253804520562441
       children [
         DEF BACK_CAVE Shape {
           appearance PBRAppearance {
@@ -818,8 +870,8 @@ Solid {
       }
     }
     Solid {
-      translation 0.006144099952592796 1.0229362752995872 -0.3343303594176401
-      rotation -0.6566884690141213 -0.7018377248981758 -0.2760146057252085 0.0037425408471901257
+      translation 0.005934960791652344 1.0191687881863238 -0.39720455610769934
+      rotation -0.8105362775004493 -0.544064863756325 -0.2168510246264154 0.0044374997164809155
       children [
         DEF BACK_CAVE Shape {
           appearance PBRAppearance {
@@ -842,8 +894,8 @@ Solid {
       }
     }
     Solid {
-      translation 0.000939416 1.30307 0.57
-      rotation -1 0 0 1.5931496938995748
+      translation 0.0009954154573748042 1.305468002642428 0.5166287890613344
+      rotation -0.9999979962296275 0.0015790506183098385 0.001230502285579224 1.5958074836630298
       children [
         DEF BACK_CAVE Shape {
           appearance PBRAppearance {
@@ -868,11 +920,11 @@ Solid {
   name "stone_shelter"
 }
 WaterBottle {
-  translation 23.213895976449848 16.838896939259474 2.0701340834330635
-  rotation -0.6955656737998641 -0.6328899879850206 0.34005684310076956 1.566356452471716
+  translation 23.21708997569623 16.8438551682781 2.0698884314527026
+  rotation -0.7158165901115834 -0.5767728612489345 0.3936237744950661 1.6110732757601214
   name "water bottle(1)"
 }
-Solid {
+DEF DOG Solid {
   translation 21.2706 17.6079 2.6
   children [
     Dog {
@@ -880,10 +932,11 @@ Solid {
   ]
   name "dog"
 }
-Solid {
+DEF MISSING_PERSON Solid {
   translation 20.8 16 2.7
   children [
     Pedestrian {
+      name "missing_person"
       shirtColor 0 0.666667 1
       pantsColor 0 0 0
       shoesColor 0 0 0
