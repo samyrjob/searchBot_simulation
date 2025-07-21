@@ -131,6 +131,10 @@ int main(int argc, char** argv) {
     wb_robot_init();
 
 
+    WbDeviceTag gps = wb_robot_get_device("gps");
+    wb_gps_enable(gps, TIME_STEP);
+
+
     // Get the speaker device by its name "speaker"
     WbDeviceTag speaker = wb_robot_get_device("speaker");
     printf("Speaker tag: %d\n", speaker);
@@ -204,7 +208,7 @@ int main(int argc, char** argv) {
 
 
     // get rotational camera
-    WbDeviceTag cam_motor = wb_robot_get_device("camera_motor");
+    WbDeviceTag top_sensors_motor = wb_robot_get_device("top_sensors_motor");
     WbDeviceTag rotating_camera = wb_robot_get_device("rotating_camera");
    
 
@@ -224,11 +228,11 @@ int main(int argc, char** argv) {
     }
 
 
-    // set position of the camera_motor
-    wb_motor_set_position(cam_motor, INFINITY);
+    // set position of the top_sensors_motor
+    wb_motor_set_position(top_sensors_motor, INFINITY);
 
     // Rotate continuously
-    wb_motor_set_velocity(cam_motor, 0.5);
+    wb_motor_set_velocity(top_sensors_motor, 0.5);
 
 
     // get and enable the radar 
@@ -241,7 +245,20 @@ int main(int argc, char** argv) {
 
 
 
+    // print messages
 
+    printf("Controls:\n");
+    printf(" 1) Press UP arrow to move forward\n");
+    printf(" 2) Press DOWN arrow to move backward\n");
+    printf(" 3) Press LEFT arrow to turn left\n");
+    printf(" 4) Press RIGHT arrow to turn right\n");
+    printf(" 5) Press 'Z' to zoom in\n");
+    printf(" 6) Press 'S' to zoom out\n");
+    printf(" 7) Press 'A' to tilt the camera up\n");
+    printf(" 8) Press 'E' to tilt the camera down\n");
+    printf(" 9) Press 'Q' to move the camera left\n");
+    printf("10) Press 'D' to move the camera right\n");
+    printf("11) Press 'T' to toggle the speaker on/off\n");
 
 
     // main loop
@@ -252,11 +269,16 @@ int main(int argc, char** argv) {
         time += TIME_STEP / 1000.0;
 
 
+        // get GPS value but desactivated because of crashing controller
+  /*      const double* coords = wb_gps_get_values(gps);*/
+       /* printf("Current GPS position: X=%.2f Y=%.2f Z=%.2f\n", coords[0], coords[1], coords[2]);*/
+
+
         if (wb_camera_get_image(camera) == NULL) {
             printf("Main camera failed during runtime. Switching to backup.\n");
             // Stop rotation of backup camera to act like a fixed one
-            wb_motor_set_position(cam_motor, -0.5);  // Stop rotating
-            wb_motor_set_velocity(cam_motor, 0.0);
+            wb_motor_set_position(top_sensors_motor, -0.5);  // Stop rotating
+            wb_motor_set_velocity(top_sensors_motor, 0.0);
         }
 
 
@@ -463,7 +485,7 @@ int main(int argc, char** argv) {
 
 
         process_camera_recognition(camera, sound_path);
-        process_camera_recognition(rotating_camera, sound_path);
+      /*  process_camera_recognition(rotating_camera, sound_path);*/
 
 
 
